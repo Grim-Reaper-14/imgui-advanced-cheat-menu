@@ -66,22 +66,22 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui.cpp">
+    <ClCompile Include="dependencies\imgui\imgui.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui_demo.cpp">
+    <ClCompile Include="dependencies\imgui\imgui_demo.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui_draw.cpp">
+    <ClCompile Include="dependencies\imgui\imgui_draw.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui_tables.cpp">
+    <ClCompile Include="dependencies\imgui\imgui_tables.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui_widgets.cpp">
+    <ClCompile Include="dependencies\imgui\imgui_widgets.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui-sfml\include\imgui-SFML.cpp">
+    <ClCompile Include="dependencies\imgui-sfml-src\imgui-SFML.cpp">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClCompile>
     <ClCompile Include="menu\imgui_custom.cpp">
@@ -140,31 +140,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imconfig.h">
+    <ClInclude Include="dependencies\imgui\imconfig.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imconfig-SFML.h">
+    <ClInclude Include="dependencies\imgui-sfml-src\imconfig-SFML.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imgui.h">
+    <ClInclude Include="dependencies\imgui\imgui.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imgui_internal.h">
+    <ClInclude Include="dependencies\imgui\imgui_internal.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imgui-SFML.h">
+    <ClInclude Include="dependencies\imgui-sfml-src\imgui-SFML.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imgui-SFML_export.h">
+    <ClInclude Include="dependencies\imgui-sfml-src\imgui-SFML_export.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imstb_rectpack.h">
+    <ClInclude Include="dependencies\imgui\imstb_rectpack.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imstb_textedit.h">
+    <ClInclude Include="dependencies\imgui\imstb_textedit.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui-sfml\include\imstb_truetype.h">
+    <ClInclude Include="dependencies\imgui\imstb_truetype.h">
       <Filter>Header Files\dependencies\imgui-sfml\imgui</Filter>
     </ClInclude>
     <ClInclude Include="menu\imgui_custom.hpp">
