@@ -25,6 +25,59 @@ namespace {
     constexpr float kSidebarInnerWidth = 194.0f;
     constexpr float kWindowWidth = 980.0f;
     constexpr float kWindowHeight = 680.0f;
+
+    constexpr const char* kScriptIcon = "\xEF\x84\xA1"; // Font Awesome code icon (f121)
+    constexpr const char* kThemeIcon = "\xEF\x94\xBF";  // Font Awesome palette icon (f53f)
+
+    void drawGothicHeader(const ImVec2& min, const ImVec2& max) {
+        ImDrawList* draw = ImGui::GetWindowDrawList();
+        const float width = max.x - min.x;
+        const float height = max.y - min.y;
+
+        draw->AddRectFilled(min, max, IM_COL32(10, 10, 15, 245), 9.0f);
+        draw->AddRect(min, max, IM_COL32(92, 52, 118, 135), 9.0f, 0, 1.2f);
+
+        // Moon and mist.
+        const ImVec2 moon(min.x + width - 34.0f, min.y + 27.0f);
+        draw->AddCircleFilled(moon, 18.0f, IM_COL32(190, 190, 210, 34), 32);
+        draw->AddCircle(moon, 18.0f, IM_COL32(205, 205, 225, 75), 32, 1.0f);
+        draw->AddLine(ImVec2(min.x + 10.0f, max.y - 23.0f), ImVec2(max.x - 8.0f, max.y - 28.0f), IM_COL32(115, 94, 135, 50), 5.0f);
+        draw->AddLine(ImVec2(min.x + 18.0f, max.y - 16.0f), ImVec2(max.x - 15.0f, max.y - 18.0f), IM_COL32(175, 175, 190, 30), 3.0f);
+
+        // Cemetery silhouettes.
+        const ImU32 grave = IM_COL32(41, 39, 49, 235);
+        draw->AddRectFilled(ImVec2(min.x + 12.0f, max.y - 34.0f), ImVec2(min.x + 29.0f, max.y - 11.0f), grave, 2.0f);
+        draw->AddCircleFilled(ImVec2(min.x + 20.5f, max.y - 34.0f), 8.5f, grave, 16);
+        draw->AddRectFilled(ImVec2(max.x - 54.0f, max.y - 32.0f), ImVec2(max.x - 37.0f, max.y - 10.0f), grave, 2.0f);
+        draw->AddCircleFilled(ImVec2(max.x - 45.5f, max.y - 32.0f), 8.5f, grave, 16);
+        draw->AddLine(ImVec2(max.x - 22.0f, max.y - 39.0f), ImVec2(max.x - 22.0f, max.y - 10.0f), grave, 4.0f);
+        draw->AddLine(ImVec2(max.x - 30.0f, max.y - 29.0f), ImVec2(max.x - 14.0f, max.y - 29.0f), grave, 4.0f);
+
+        // Reaper hood/body.
+        const ImVec2 head(min.x + 47.0f, min.y + 35.0f);
+        draw->AddTriangleFilled(
+            ImVec2(head.x - 28.0f, head.y + 42.0f),
+            ImVec2(head.x, head.y - 25.0f),
+            ImVec2(head.x + 28.0f, head.y + 42.0f),
+            IM_COL32(18, 17, 24, 255));
+        draw->AddCircleFilled(head, 24.0f, IM_COL32(20, 19, 27, 255), 28);
+        draw->AddCircleFilled(ImVec2(head.x, head.y + 2.0f), 14.0f, IM_COL32(5, 5, 8, 255), 24);
+        draw->AddCircleFilled(ImVec2(head.x - 5.0f, head.y), 2.0f, IM_COL32(175, 90, 220, 210), 8);
+        draw->AddCircleFilled(ImVec2(head.x + 5.0f, head.y), 2.0f, IM_COL32(175, 90, 220, 210), 8);
+
+        // Scythe.
+        draw->AddLine(ImVec2(head.x + 18.0f, head.y - 17.0f), ImVec2(head.x + 42.0f, max.y - 12.0f), IM_COL32(118, 118, 130, 220), 2.2f);
+        draw->AddBezierCubic(
+            ImVec2(head.x + 11.0f, head.y - 23.0f),
+            ImVec2(head.x + 34.0f, head.y - 42.0f),
+            ImVec2(head.x + 62.0f, head.y - 38.0f),
+            ImVec2(head.x + 72.0f, head.y - 23.0f),
+            IM_COL32(170, 170, 185, 220),
+            2.0f);
+
+        draw->AddText(bigFont, 22.0f, ImVec2(min.x + 82.0f, min.y + 24.0f), IM_COL32(238, 235, 245, 255), "REVIVAL");
+        draw->AddText(ImVec2(min.x + 84.0f, min.y + 52.0f), IM_COL32(153, 108, 185, 230), "V2  //  REAPER BUILD");
+    }
 }
 
 void Menu::setColors() {
@@ -99,36 +152,15 @@ void Menu::loadTheme() {
 
     setColors();
 
-    const auto customLogo = std::filesystem::current_path() / "assets" / "icons" / "logo.png";
-    if (!ImageLoader::i().loadFromFile("sidebar.logo", customLogo, true, false))
-        ImageLoader::i().loadFromMemory("sidebar.logo", logo, sizeof(logo), true, false);
-
     BackgroundManager::i().initialize();
     ThemeManager::i().applyPreset(ThemeManager::i().currentPreset());
 }
 
 void Menu::renderLogo() {
-    ImGui::BeginChild("##sidebar-logo", ImVec2(kSidebarInnerWidth, 88.0f), true, ImGuiWindowFlags_NoScrollbar);
-    ImGui::SetCursorPosY(14.0f);
-
-    if (sf::Texture* texture = ImageLoader::i().get("sidebar.logo")) {
-        const auto size = texture->getSize();
-        if (size.x > 0 && size.y > 0) {
-            sf::Sprite sprite(*texture);
-            const float height = 38.0f;
-            const float scale = height / static_cast<float>(size.y);
-            sprite.setScale(scale, scale);
-            ImGui::Image(sprite);
-            ImGui::SameLine(0.0f, 10.0f);
-        }
-    }
-
-    ImGui::BeginGroup();
-    ImGui::PushFont(bigFont);
-    ImGui::TextUnformatted("Revival");
-    ImGui::PopFont();
-    ImGui::TextDisabled("Standalone UI");
-    ImGui::EndGroup();
+    ImGui::BeginChild("##sidebar-logo", ImVec2(kSidebarInnerWidth, 104.0f), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs);
+    const ImVec2 min = ImGui::GetWindowPos();
+    const ImVec2 size = ImGui::GetWindowSize();
+    drawGothicHeader(min, ImVec2(min.x + size.x, min.y + size.y));
     ImGui::EndChild();
 }
 
@@ -142,7 +174,7 @@ void Menu::renderUser() {
     ImGui::TextUnformatted("Revival v2.1");
     ImGui::Spacing();
     ImGui::TextDisabled("%.0f FPS", ImGui::GetIO().Framerate);
-    ImGui::TextDisabled("Lua: %s", LuaManager::i().isAvailable() ? "ready" : "optional");
+    ImGui::TextDisabled("Lua: %s", LuaManager::i().isAvailable() ? "Sol2 ready" : "initializing");
     ImGui::EndChild();
 }
 
@@ -154,7 +186,7 @@ void Menu::renderPanel() {
 }
 
 void Menu::renderTabs() {
-    ImGui::BeginChild("##sidebar-tabs", ImVec2(kSidebarInnerWidth, 390.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild("##sidebar-tabs", ImVec2(kSidebarInnerWidth, 374.0f), true, ImGuiWindowFlags_NoScrollbar);
 
     static ImGuiTextFilter2 filter;
     filter.Draw2(ICON_FA_SEARCH " Search", 176.0f);
@@ -164,8 +196,8 @@ void Menu::renderTabs() {
         obf(ICON_FA_CROSSHAIRS " LegitBot"),
         obf(ICON_FA_EYE " Visuals"),
         obf(ICON_FA_COG " Misc"),
-        obf("<> Scripts"),
-        obf("* Themes"),
+        std::string(kScriptIcon) + "  Scripts",
+        std::string(kThemeIcon) + "  Themes",
         obf(ICON_FA_SAVE " Configs")
     };
 
