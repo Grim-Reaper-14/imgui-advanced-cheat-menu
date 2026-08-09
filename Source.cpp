@@ -19,9 +19,23 @@ namespace {
     constexpr unsigned int kWindowWidth = 980;
     constexpr unsigned int kWindowHeight = 680;
 
-    void handleHotkeys() {
-        if (GetAsyncKeyState(VK_INSERT) & 1)
+    void setWindowVisible(sf::RenderWindow& window, bool visible) {
+        HWND hwnd = reinterpret_cast<HWND>(window.getSystemHandle());
+        if (!hwnd)
+            return;
+
+        ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+        if (visible) {
+            ShowWindow(hwnd, SW_RESTORE);
+            SetForegroundWindow(hwnd);
+        }
+    }
+
+    void handleHotkeys(sf::RenderWindow& window) {
+        if (GetAsyncKeyState(VK_INSERT) & 1) {
             Menu::isGUIVisible = !Menu::isGUIVisible;
+            setWindowVisible(window, Menu::isGUIVisible);
+        }
 
         for (Module* module : ModuleManager::i().modules) {
             if (!module)
@@ -72,16 +86,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
                 window.close();
         }
 
+        handleHotkeys(window);
+
+        if (!Menu::isGUIVisible) {
+            Sleep(16);
+            deltaClock.restart();
+            continue;
+        }
+
         const sf::Time frameTime = deltaClock.restart();
         ImGui::SFML::Update(window, frameTime);
 
-        handleHotkeys();
         LuaManager::i().update(frameTime.asSeconds());
 
         Menu::render();
-        if (Menu::isGUIVisible)
-            Console::i().render();
-
+        Console::i().render();
         renderNotifications();
 
         window.clear(sf::Color(15, 16, 24, 255));
