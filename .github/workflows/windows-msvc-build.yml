@@ -124,3 +124,4 @@ jobs:
         run: exit 1
 
 # Revival V2 scripting dependency validation
+# Final UI + Lua validation
