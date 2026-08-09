@@ -153,3 +153,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     ImGui::SFML::Shutdown();
     return 0;
 }
+
+// Validate the corrected Revival V2 header asset on Windows CI.
