@@ -112,3 +112,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     ImGui::SFML::Shutdown();
     return 0;
 }
+
+// Validate generated Revival V2 artwork integration.
