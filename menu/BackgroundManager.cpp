@@ -55,6 +55,36 @@ namespace {
         return extension == ".png" || extension == ".jpg" || extension == ".jpeg" ||
                extension == ".bmp" || extension == ".tga";
     }
+
+    void drawTexturePreview(const sf::Texture& texture, const ImVec2& size) {
+        const auto native = texture.getSize();
+        if (native.x == 0 || native.y == 0 || size.x <= 0.0f || size.y <= 0.0f)
+            return;
+
+        ImVec2 uv0(0.0f, 0.0f);
+        ImVec2 uv1(1.0f, 1.0f);
+
+        const float textureAspect = static_cast<float>(native.x) / static_cast<float>(native.y);
+        const float viewAspect = size.x / size.y;
+        if (textureAspect > viewAspect) {
+            const float visible = viewAspect / textureAspect;
+            uv0.x = (1.0f - visible) * 0.5f;
+            uv1.x = 1.0f - uv0.x;
+        }
+        else if (textureAspect < viewAspect) {
+            const float visible = textureAspect / viewAspect;
+            uv0.y = (1.0f - visible) * 0.5f;
+            uv1.y = 1.0f - uv0.y;
+        }
+
+        const ImVec2 min = ImGui::GetCursorScreenPos();
+        const ImVec2 max(min.x + size.x, min.y + size.y);
+        ImDrawList* draw = ImGui::GetWindowDrawList();
+        draw->AddRectFilled(min, max, IM_COL32(5, 7, 13, 255), 8.0f);
+        draw->AddImage(textureId(texture), min, max, uv0, uv1, IM_COL32_WHITE);
+        draw->AddRect(min, max, IM_COL32(124, 57, 184, 190), 8.0f, 0, 1.3f);
+        ImGui::Dummy(size);
+    }
 }
 
 BackgroundManager::BackgroundManager() {
@@ -361,7 +391,7 @@ void BackgroundManager::renderSettings() {
         else {
             *imageIndex_ = std::clamp(*imageIndex_, 0, static_cast<int>(images_.size()) - 1);
             const std::string selectedName = images_[*imageIndex_].filename().string();
-            ImGui::SetNextItemWidth(240.0f);
+            ImGui::SetNextItemWidth(300.0f);
             if (ImGui::BeginCombo("Image", selectedName.c_str())) {
                 for (int i = 0; i < static_cast<int>(images_.size()); ++i) {
                     const bool selected = i == *imageIndex_;
@@ -375,8 +405,19 @@ void BackgroundManager::renderSettings() {
                 }
                 ImGui::EndCombo();
             }
+
+            ensureSelectedImageLoaded();
+            if (sf::Texture* preview = ImageLoader::i().get(kBackgroundTextureId)) {
+                ImGui::Spacing();
+                ImGui::TextDisabled("Preview: %s", selectedName.c_str());
+                drawTexturePreview(*preview, ImVec2(360.0f, 190.0f));
+            }
+            else {
+                ImGui::TextColored(ImVec4(1.0f, 0.45f, 0.45f, 1.0f), "Preview failed to load for %s", selectedName.c_str());
+            }
         }
 
+        ImGui::Spacing();
         ImGui::SetNextItemWidth(240.0f);
         ImGui::Combo("Fit", imageFit_, fitModes, IM_ARRAYSIZE(fitModes));
         ImGui::Checkbox("Parallax", parallax_);
