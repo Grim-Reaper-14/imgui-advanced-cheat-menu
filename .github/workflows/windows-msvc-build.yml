@@ -55,49 +55,33 @@ jobs:
           git commit -m 'Vendor Sol2 v3.3.1 and Lua 5.4.8'
           git push origin HEAD:revival-v2-cleanup
 
-      - name: Repair verified Revival header JPEG
+      - name: Validate Revival header artwork
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $expectedSha256 = 'baa7ca1d75c9b414c1ef476111fd6c2cc39376774c8ddea70f2f411521e0ad40'
-          $parts = New-Object System.Collections.Generic.List[string]
-
-          0..3 | ForEach-Object {
-            $path = "resources/RevivalHeaderPart$_.inc"
-            $text = Get-Content $path -Raw
-            $match = [regex]::Match(
-              $text,
-              'R"REVIVAL\((.*?)\)REVIVAL",',
-              [System.Text.RegularExpressions.RegexOptions]::Singleline)
-            if (-not $match.Success) {
-              throw "Could not decode $path"
-            }
-            $parts.Add($match.Groups[1].Value)
-          }
-
-          $base64 = $parts -join ''
-          $bytes = [Convert]::FromBase64String($base64)
           $headerPath = 'assets/icons/revival_header.jpg'
-          [IO.File]::WriteAllBytes($headerPath, $bytes)
+          $expectedSha256 = '63def357ee750551a93e8151cd44036db42e66bc20ce02ab96f55be57023e9a3'
+
+          if (-not (Test-Path $headerPath)) {
+            throw "Missing $headerPath"
+          }
 
           $actualSha256 = (Get-FileHash $headerPath -Algorithm SHA256).Hash.ToLowerInvariant()
           if ($actualSha256 -ne $expectedSha256) {
-            throw "Revival header hash mismatch. Expected $expectedSha256 but got $actualSha256"
+            throw "Wrong Revival header file. Expected $expectedSha256 but got $actualSha256"
           }
 
-          Write-Host "Verified Revival header: $actualSha256"
-
-          git add -- $headerPath
-          git diff --cached --quiet
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host 'Tracked Revival header JPEG already matches verified artwork.'
-            exit 0
+          Add-Type -AssemblyName System.Drawing
+          $image = [System.Drawing.Image]::FromFile((Resolve-Path $headerPath))
+          try {
+            if ($image.Width -ne 640 -or $image.Height -ne 213) {
+              throw "Wrong Revival header dimensions: $($image.Width)x$($image.Height)"
+            }
+            Write-Host "Verified Revival header JPEG: $($image.Width)x$($image.Height), SHA256 $actualSha256"
           }
-
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Fix Revival header JPEG'
-          git push origin HEAD:revival-v2-cleanup
+          finally {
+            $image.Dispose()
+          }
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
@@ -166,8 +150,3 @@ jobs:
         if: steps.build.outputs.state != 'success'
         shell: pwsh
         run: exit 1
-
-# Revival V2 scripting dependency validation
-# Final UI + Lua validation
-# Validate post-Sol2 macro isolation fix
-# Validate corrected artwork header, main scrolling, and six image nav icons
