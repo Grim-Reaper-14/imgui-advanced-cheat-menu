@@ -14,8 +14,8 @@
 #include <vector>
 
 namespace {
-    void beginMiscCard(const char* id, const char* title, const ImVec2& size) {
-        ImGui::BeginChild(id, size, true, ImGuiWindowFlags_NoScrollbar);
+    void beginMiscCard(const char* id, const char* title, float height) {
+        ImGui::BeginChild(id, ImVec2(0.0f, height), true, ImGuiWindowFlags_NoScrollbar);
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.92f, 0.86f, 1.0f, 1.0f));
         ImGui::TextUnformatted(title);
         ImGui::PopStyleColor();
@@ -55,61 +55,67 @@ HUD::HUD() : Module(obf("HUD"), obf("Renders Revival status and module overlays"
 }
 
 void HUD::renderImGui() {
-    const float gap = 12.0f;
-    const float width = ImGui::GetContentRegionAvail().x;
-    const float columnWidth = (width - gap) * 0.5f;
+    ImGui::PushStyleVar(ImGuiStyleVar_CellPadding, ImVec2(6.0f, 6.0f));
 
-    beginMiscCard("##misc-status-card", "Status Overlay", ImVec2(columnWidth, 300.0f));
-    ImGui::Checkbox_(obf("Enable HUD").c_str(), &isToggled());
-    ImGui::Checkbox_(obf("Revival watermark").c_str(), showWatermark);
-    ImGui::Checkbox_(obf("FPS counter").c_str(), showFps);
-    ImGui::Checkbox_(obf("Clock").c_str(), showClock);
-    ImGui::Checkbox_(obf("Lua status").c_str(), showLuaStatus);
-    ImGui::Checkbox_(obf("Compact status").c_str(), compactStatus);
-    ImGuiHelper::renderCombo(
-        obf("Screen corner"),
-        { obf("Top Left"), obf("Top Right"), obf("Bottom Left"), obf("Bottom Right") },
-        *statusCorner,
-        190.0f);
-    endMiscCard();
+    if (ImGui::BeginTable("##misc-layout", 2, ImGuiTableFlags_SizingStretchSame)) {
+        ImGui::TableNextRow();
 
-    ImGui::SameLine(0.0f, gap);
+        ImGui::TableSetColumnIndex(0);
+        beginMiscCard("##misc-status-card", "Status Overlay", 315.0f);
+        ImGui::Checkbox_(obf("Enable HUD").c_str(), &isToggled());
+        ImGui::Checkbox_(obf("Revival watermark").c_str(), showWatermark);
+        ImGui::Checkbox_(obf("FPS counter").c_str(), showFps);
+        ImGui::Checkbox_(obf("Clock").c_str(), showClock);
+        ImGui::Checkbox_(obf("Lua status").c_str(), showLuaStatus);
+        ImGui::Checkbox_(obf("Compact status").c_str(), compactStatus);
+        ImGuiHelper::renderCombo(
+            obf("Screen corner"),
+            { obf("Top Left"), obf("Top Right"), obf("Bottom Left"), obf("Bottom Right") },
+            *statusCorner,
+            210.0f);
+        endMiscCard();
 
-    beginMiscCard("##misc-module-card", "Module List", ImVec2(columnWidth, 300.0f));
-    ImGui::Checkbox_(obf("Show module list").c_str(), isML);
-    ImGui::Checkbox_(obf("Rainbow modules").c_str(), isMLRainbow);
-    ImGuiHelper::renderCombo(obf("Sort"), { obf("ASC"), obf("DESC") }, *sortML, 190.0f);
-    ImGuiHelper::renderCombo(obf("Align"), { obf("Left"), obf("Right"), obf("Middle") }, *alignML, 190.0f);
-    ImGui::ColorEdit4(obf("Module color").c_str(), reinterpret_cast<float*>(colML), ImGuiColorEditFlags_AlphaBar);
-    ImGui::ColorEdit4(obf("Module background").c_str(), reinterpret_cast<float*>(colML_Bg), ImGuiColorEditFlags_AlphaBar);
-    endMiscCard();
+        ImGui::TableSetColumnIndex(1);
+        beginMiscCard("##misc-module-card", "Module List", 315.0f);
+        ImGui::Checkbox_(obf("Show module list").c_str(), isML);
+        ImGui::Checkbox_(obf("Rainbow modules").c_str(), isMLRainbow);
+        ImGuiHelper::renderCombo(obf("Sort"), { obf("ASC"), obf("DESC") }, *sortML, 210.0f);
+        ImGuiHelper::renderCombo(obf("Align"), { obf("Left"), obf("Right"), obf("Middle") }, *alignML, 210.0f);
+        ImGui::ColorEdit4(obf("Module color").c_str(), reinterpret_cast<float*>(colML), ImGuiColorEditFlags_AlphaBar);
+        ImGui::ColorEdit4(obf("Module background").c_str(), reinterpret_cast<float*>(colML_Bg), ImGuiColorEditFlags_AlphaBar);
+        endMiscCard();
 
-    ImGui::Spacing();
+        ImGui::TableNextRow();
 
-    beginMiscCard("##misc-appearance-card", "Appearance", ImVec2(columnWidth, 285.0f));
-    ImGui::SetNextItemWidth(190.0f);
-    ImGui::SliderFloat("HUD scale", &hudScale->x, hudScale->y, hudScale->z, "%.2fx");
-    ImGui::SetNextItemWidth(190.0f);
-    ImGui::SliderFloat("HUD opacity", &hudAlpha->x, hudAlpha->y, hudAlpha->z, "%.2f");
-    ImGui::Checkbox_(obf("Accent line").c_str(), showAccentLine);
-    ImGui::ColorEdit4(obf("Accent color").c_str(), reinterpret_cast<float*>(statusAccent), ImGuiColorEditFlags_AlphaBar);
-    ImGui::ColorEdit4(obf("Status background").c_str(), reinterpret_cast<float*>(statusBg), ImGuiColorEditFlags_AlphaBar);
-    endMiscCard();
+        ImGui::TableSetColumnIndex(0);
+        beginMiscCard("##misc-appearance-card", "Appearance", 300.0f);
+        ImGui::SetNextItemWidth(210.0f);
+        ImGui::SliderFloat("HUD scale", &hudScale->x, hudScale->y, hudScale->z, "%.2fx");
+        ImGui::SetNextItemWidth(210.0f);
+        ImGui::SliderFloat("HUD opacity", &hudAlpha->x, hudAlpha->y, hudAlpha->z, "%.2f");
+        ImGui::Checkbox_(obf("Accent line").c_str(), showAccentLine);
+        ImGui::ColorEdit4(obf("Accent color").c_str(), reinterpret_cast<float*>(statusAccent), ImGuiColorEditFlags_AlphaBar);
+        ImGui::ColorEdit4(obf("Status background").c_str(), reinterpret_cast<float*>(statusBg), ImGuiColorEditFlags_AlphaBar);
+        endMiscCard();
 
-    ImGui::SameLine(0.0f, gap);
+        ImGui::TableSetColumnIndex(1);
+        beginMiscCard("##misc-behavior-card", "Module List Motion", 300.0f);
+        ImGui::TextDisabled("Rainbow animation controls");
+        ImGui::Spacing();
+        ImGui::SetNextItemWidth(210.0f);
+        ImGui::SliderFloat_(obf("Speed").c_str(), &speedML->x, speedML->y, speedML->z);
+        ImGui::SetNextItemWidth(210.0f);
+        ImGui::SliderFloat_(obf("Offset").c_str(), &offsetML->x, offsetML->y, offsetML->z);
+        ImGui::SetNextItemWidth(210.0f);
+        ImGui::SliderFloat_(obf("Range").c_str(), &rangeML->x, rangeML->y, rangeML->z);
+        ImGui::Spacing();
+        ImGui::TextWrapped("These controls affect the animated module list when Rainbow modules is enabled.");
+        endMiscCard();
 
-    beginMiscCard("##misc-behavior-card", "Module List Motion", ImVec2(columnWidth, 285.0f));
-    ImGui::TextDisabled("Rainbow animation");
-    ImGui::SetNextItemWidth(190.0f);
-    ImGui::SliderFloat_(obf("Speed").c_str(), &speedML->x, speedML->y, speedML->z);
-    ImGui::SetNextItemWidth(190.0f);
-    ImGui::SliderFloat_(obf("Offset").c_str(), &offsetML->x, offsetML->y, offsetML->z);
-    ImGui::SetNextItemWidth(190.0f);
-    ImGui::SliderFloat_(obf("Range").c_str(), &rangeML->x, rangeML->y, rangeML->z);
-    ImGui::Spacing();
-    ImGui::TextWrapped("These controls affect the animated module list when Rainbow modules is enabled.");
-    endMiscCard();
+        ImGui::EndTable();
+    }
 
+    ImGui::PopStyleVar();
     ImGui::Dummy(ImVec2(0.0f, 24.0f));
 }
 
