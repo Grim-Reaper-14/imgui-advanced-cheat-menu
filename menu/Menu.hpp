@@ -47,3 +47,6 @@ namespace Menu {
     void renderMisc();
     void render();
 }
+
+// Header drawing helpers live outside namespace Menu in Menu.cpp.
+inline ImFont*& bigFont = Menu::bigFont;
