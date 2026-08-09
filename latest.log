@@ -279,6 +279,18 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): messa
           ]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<7>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\Menu.hpp(10): message : see reference to class template instantiation 'Obf::Xor_String<7>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Themes.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   ModuleManager.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
           with
@@ -307,6 +319,7 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): messa
           ]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<11>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\Module.hpp(42): message : see reference to class template instantiation 'Obf::Xor_String<11>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Compiling...
   RCS.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
           with
@@ -335,7 +348,6 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): messa
           ]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<11>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\Module.hpp(42): message : see reference to class template instantiation 'Obf::Xor_String<11>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-  Compiling...
   Set.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
