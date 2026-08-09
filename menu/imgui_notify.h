@@ -124,7 +124,7 @@ public:
 
 	NOTIFY_INLINE auto get_type() -> const ImGuiToastType& { return this->type; };
 
-	NOTIFY_INLINE auto get_color() -> const ImVec4&
+	NOTIFY_INLINE auto get_color() -> ImVec4
 	{
 		switch (this->type)
 		{
@@ -138,6 +138,8 @@ public:
 			return { 255, 0, 0, 255 }; // Error
 		case ImGuiToastType_Info:
 			return { 0, 157, 255, 255 }; // Blue
+		default:
+			return { 255, 255, 255, 255 };
 		}
 	}
 
@@ -155,6 +157,8 @@ public:
 			return ICON_FA_TIMES_CIRCLE;
 		case ImGuiToastType_Info:
 			return ICON_FA_INFO_CIRCLE;
+		default:
+			return nullptr;
 		}
 	}
 
@@ -162,7 +166,7 @@ public:
 
 	NOTIFY_INLINE auto get_elapsed_time() { return notify_now_ms() - this->creation_time; }
 
-	NOTIFY_INLINE auto get_phase() -> const ImGuiToastPhase&
+	NOTIFY_INLINE auto get_phase() -> ImGuiToastPhase
 	{
 		const auto elapsed = get_elapsed_time();
 
@@ -184,7 +188,7 @@ public:
 		}
 	}
 
-	NOTIFY_INLINE auto get_fade_percent() -> const float
+	NOTIFY_INLINE auto get_fade_percent() -> float
 	{
 		const auto phase = get_phase();
 		const auto elapsed = get_elapsed_time();
