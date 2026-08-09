@@ -21,62 +21,69 @@
 #include <vector>
 
 namespace {
-    constexpr float kSidebarWidth = 210.0f;
-    constexpr float kSidebarInnerWidth = 194.0f;
-    constexpr float kWindowWidth = 980.0f;
-    constexpr float kWindowHeight = 680.0f;
+    constexpr float kSidebarWidth = 220.0f;
+    constexpr float kSidebarInnerWidth = 204.0f;
+    constexpr float kWindowWidth = 1080.0f;
+    constexpr float kWindowHeight = 800.0f;
+    constexpr float kHeaderHeight = 244.0f;
+    constexpr float kNavWidth = 186.0f;
+    constexpr float kNavHeight = 46.0f;
 
-    constexpr const char* kScriptIcon = "\xEF\x84\xA1"; // Font Awesome code icon (f121)
-    constexpr const char* kThemeIcon = "\xEF\x94\xBF";  // Font Awesome palette icon (f53f)
+    constexpr const char* kScriptFallbackIcon = "\xEF\x84\xA1"; // Font Awesome code
+    constexpr const char* kThemeFallbackIcon = "\xEF\x94\xBF";  // Font Awesome palette
 
-    void drawGothicHeader(const ImVec2& min, const ImVec2& max) {
-        ImDrawList* draw = ImGui::GetWindowDrawList();
-        const float width = max.x - min.x;
-        const float height = max.y - min.y;
+    std::filesystem::path resolveAsset(const char* fileName) {
+        std::error_code ec;
+        std::filesystem::path base = std::filesystem::current_path(ec);
+        if (ec)
+            return {};
 
-        draw->AddRectFilled(min, max, IM_COL32(10, 10, 15, 245), 9.0f);
-        draw->AddRect(min, max, IM_COL32(92, 52, 118, 135), 9.0f, 0, 1.2f);
+        for (int depth = 0; depth < 5; ++depth) {
+            const auto candidate = base / "assets" / "icons" / fileName;
+            if (std::filesystem::exists(candidate, ec) && !ec)
+                return candidate;
 
-        // Moon and mist.
-        const ImVec2 moon(min.x + width - 34.0f, min.y + 27.0f);
-        draw->AddCircleFilled(moon, 18.0f, IM_COL32(190, 190, 210, 34), 32);
-        draw->AddCircle(moon, 18.0f, IM_COL32(205, 205, 225, 75), 32, 1.0f);
-        draw->AddLine(ImVec2(min.x + 10.0f, max.y - 23.0f), ImVec2(max.x - 8.0f, max.y - 28.0f), IM_COL32(115, 94, 135, 50), 5.0f);
-        draw->AddLine(ImVec2(min.x + 18.0f, max.y - 16.0f), ImVec2(max.x - 15.0f, max.y - 18.0f), IM_COL32(175, 175, 190, 30), 3.0f);
+            if (!base.has_parent_path())
+                break;
+            base = base.parent_path();
+        }
 
-        // Cemetery silhouettes.
-        const ImU32 grave = IM_COL32(41, 39, 49, 235);
-        draw->AddRectFilled(ImVec2(min.x + 12.0f, max.y - 34.0f), ImVec2(min.x + 29.0f, max.y - 11.0f), grave, 2.0f);
-        draw->AddCircleFilled(ImVec2(min.x + 20.5f, max.y - 34.0f), 8.5f, grave, 16);
-        draw->AddRectFilled(ImVec2(max.x - 54.0f, max.y - 32.0f), ImVec2(max.x - 37.0f, max.y - 10.0f), grave, 2.0f);
-        draw->AddCircleFilled(ImVec2(max.x - 45.5f, max.y - 32.0f), 8.5f, grave, 16);
-        draw->AddLine(ImVec2(max.x - 22.0f, max.y - 39.0f), ImVec2(max.x - 22.0f, max.y - 10.0f), grave, 4.0f);
-        draw->AddLine(ImVec2(max.x - 30.0f, max.y - 29.0f), ImVec2(max.x - 14.0f, max.y - 29.0f), grave, 4.0f);
+        return {};
+    }
 
-        // Reaper hood/body.
-        const ImVec2 head(min.x + 47.0f, min.y + 35.0f);
-        draw->AddTriangleFilled(
-            ImVec2(head.x - 28.0f, head.y + 42.0f),
-            ImVec2(head.x, head.y - 25.0f),
-            ImVec2(head.x + 28.0f, head.y + 42.0f),
-            IM_COL32(18, 17, 24, 255));
-        draw->AddCircleFilled(head, 24.0f, IM_COL32(20, 19, 27, 255), 28);
-        draw->AddCircleFilled(ImVec2(head.x, head.y + 2.0f), 14.0f, IM_COL32(5, 5, 8, 255), 24);
-        draw->AddCircleFilled(ImVec2(head.x - 5.0f, head.y), 2.0f, IM_COL32(175, 90, 220, 210), 8);
-        draw->AddCircleFilled(ImVec2(head.x + 5.0f, head.y), 2.0f, IM_COL32(175, 90, 220, 210), 8);
+    void loadUiAsset(const char* id, const char* fileName) {
+        const auto path = resolveAsset(fileName);
+        if (!path.empty())
+            ImageLoader::i().loadFromFile(id, path, true, false);
+    }
 
-        // Scythe.
-        draw->AddLine(ImVec2(head.x + 18.0f, head.y - 17.0f), ImVec2(head.x + 42.0f, max.y - 12.0f), IM_COL32(118, 118, 130, 220), 2.2f);
-        draw->AddBezierCubic(
-            ImVec2(head.x + 11.0f, head.y - 23.0f),
-            ImVec2(head.x + 34.0f, head.y - 42.0f),
-            ImVec2(head.x + 62.0f, head.y - 38.0f),
-            ImVec2(head.x + 72.0f, head.y - 23.0f),
-            IM_COL32(170, 170, 185, 220),
-            2.0f);
+    void renderImageNavItem(int index, const char* label, const char* imageId, const char* fallbackIcon) {
+        const bool selected = Menu::state.selectedTab == index;
+        const ImVec4 transparent(0.0f, 0.0f, 0.0f, 0.0f);
 
-        draw->AddText(bigFont, 22.0f, ImVec2(min.x + 82.0f, min.y + 24.0f), IM_COL32(238, 235, 245, 255), "REVIVAL");
-        draw->AddText(ImVec2(min.x + 84.0f, min.y + 52.0f), IM_COL32(153, 108, 185, 230), "V2  //  REAPER BUILD");
+        const ImVec2 start = ImGui::GetCursorScreenPos();
+        const std::string id = "##nav-" + std::to_string(index);
+
+        ImGui::PushStyleColor(ImGuiCol_Header, selected ? Menu::style->Colors[ImGuiCol_ButtonActive] : transparent);
+        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, Menu::style->Colors[ImGuiCol_ButtonHovered]);
+        ImGui::PushStyleColor(ImGuiCol_HeaderActive, Menu::style->Colors[ImGuiCol_ButtonActive]);
+        if (ImGui::Selectable(id.c_str(), selected, 0, ImVec2(kNavWidth, kNavHeight)))
+            Menu::state.selectedTab = index;
+        ImGui::PopStyleColor(3);
+
+        const ImVec2 after = ImGui::GetCursorScreenPos();
+        if (sf::Texture* texture = ImageLoader::i().get(imageId)) {
+            ImGui::SetCursorScreenPos(ImVec2(start.x + 8.0f, start.y + 7.0f));
+            ImGui::Image(*texture, sf::Vector2f(32.0f, 32.0f));
+        }
+        else {
+            ImGui::SetCursorScreenPos(ImVec2(start.x + 11.0f, start.y + 13.0f));
+            ImGui::TextUnformatted(fallbackIcon);
+        }
+
+        ImGui::SetCursorScreenPos(ImVec2(start.x + 50.0f, start.y + 13.0f));
+        ImGui::TextUnformatted(label);
+        ImGui::SetCursorScreenPos(after);
     }
 }
 
@@ -152,15 +159,47 @@ void Menu::loadTheme() {
 
     setColors();
 
+    loadUiAsset("revival.header", "revival_header.jpg");
+    loadUiAsset("revival.scripts", "scripts_icon.jpg");
+    loadUiAsset("revival.themes", "themes_icon.jpg");
+
     BackgroundManager::i().initialize();
     ThemeManager::i().applyPreset(ThemeManager::i().currentPreset());
 }
 
 void Menu::renderLogo() {
-    ImGui::BeginChild("##sidebar-logo", ImVec2(kSidebarInnerWidth, 104.0f), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs);
-    const ImVec2 min = ImGui::GetWindowPos();
-    const ImVec2 size = ImGui::GetWindowSize();
-    drawGothicHeader(min, ImVec2(min.x + size.x, min.y + size.y));
+    ImGui::BeginChild(
+        "##revival-brand-header",
+        ImVec2(0.0f, kHeaderHeight),
+        true,
+        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoInputs);
+
+    if (sf::Texture* texture = ImageLoader::i().get("revival.header")) {
+        const ImVec2 available = ImGui::GetContentRegionAvail();
+        const auto native = texture->getSize();
+        if (native.x > 0 && native.y > 0) {
+            const float aspect = static_cast<float>(native.x) / static_cast<float>(native.y);
+            float width = available.x;
+            float height = width / aspect;
+            if (height > available.y) {
+                height = available.y;
+                width = height * aspect;
+            }
+
+            const float offsetX = (available.x - width) * 0.5f;
+            const float offsetY = (available.y - height) * 0.5f;
+            ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + offsetX, ImGui::GetCursorPosY() + offsetY));
+            ImGui::Image(*texture, sf::Vector2f(width, height));
+        }
+    }
+    else {
+        ImGui::SetCursorPosY(72.0f);
+        ImGui::PushFont(bigFont);
+        ImGui::TextUnformatted("REVIVAL V2");
+        ImGui::PopFont();
+        ImGui::TextDisabled("Reaper Build");
+    }
+
     ImGui::EndChild();
 }
 
@@ -179,8 +218,6 @@ void Menu::renderUser() {
 }
 
 void Menu::renderPanel() {
-    renderLogo();
-    ImGui::Spacing();
     renderTabs();
     renderUser();
 }
@@ -189,15 +226,15 @@ void Menu::renderTabs() {
     ImGui::BeginChild("##sidebar-tabs", ImVec2(kSidebarInnerWidth, 374.0f), true, ImGuiWindowFlags_NoScrollbar);
 
     static ImGuiTextFilter2 filter;
-    filter.Draw2(ICON_FA_SEARCH " Search", 176.0f);
+    filter.Draw2(ICON_FA_SEARCH " Search", kNavWidth);
     ImGui::Spacing();
 
     const std::array<std::string, 6> tabNames = {
         obf(ICON_FA_CROSSHAIRS " LegitBot"),
         obf(ICON_FA_EYE " Visuals"),
         obf(ICON_FA_COG " Misc"),
-        std::string(kScriptIcon) + "  Scripts",
-        std::string(kThemeIcon) + "  Themes",
+        "Scripts",
+        "Themes",
         obf(ICON_FA_SAVE " Configs")
     };
 
@@ -209,11 +246,20 @@ void Menu::renderTabs() {
         if (!filter.PassFilter(tabNames[i].c_str()))
             continue;
 
+        if (i == 3) {
+            renderImageNavItem(i, "Scripts", "revival.scripts", kScriptFallbackIcon);
+            continue;
+        }
+        if (i == 4) {
+            renderImageNavItem(i, "Themes", "revival.themes", kThemeFallbackIcon);
+            continue;
+        }
+
         const bool selected = state.selectedTab == i;
         ImGui::PushStyleColor(ImGuiCol_Button, selected ? style->Colors[ImGuiCol_ButtonActive] : transparent);
         ImGui::PushStyleColor(ImGuiCol_Text, selected ? style->Colors[ImGuiCol_Text] : *notSelectedTextColor);
 
-        if (ImGui::Button(tabNames[i].c_str(), ImVec2(176.0f, 46.0f)))
+        if (ImGui::Button(tabNames[i].c_str(), ImVec2(kNavWidth, kNavHeight)))
             state.selectedTab = i;
 
         ImGui::PopStyleColor(2);
@@ -290,6 +336,9 @@ void Menu::render() {
     BackgroundManager::i().render(
         windowPos,
         ImVec2(windowPos.x + windowSize.x, windowPos.y + windowSize.y));
+
+    renderLogo();
+    ImGui::Spacing();
 
     if (ImGui::BeginTable("##main-layout", 2, ImGuiTableFlags_SizingStretchProp)) {
         ImGui::TableSetupColumn("##sidebar", ImGuiTableColumnFlags_WidthFixed, kSidebarWidth);

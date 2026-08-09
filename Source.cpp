@@ -16,8 +16,8 @@
 #include <Windows.h>
 
 namespace {
-    constexpr unsigned int kWindowWidth = 980;
-    constexpr unsigned int kWindowHeight = 680;
+    constexpr unsigned int kWindowWidth = 1080;
+    constexpr unsigned int kWindowHeight = 800;
 
     void setWindowVisible(sf::RenderWindow& window, bool visible) {
         HWND hwnd = reinterpret_cast<HWND>(window.getSystemHandle());
