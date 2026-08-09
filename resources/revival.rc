@@ -1,0 +1,9 @@
+#include "resource.h"
+
+IDR_REVIVAL_HEADER  RCDATA "../assets/icons/revival_header.jpg"
+IDR_REVIVAL_LEGIT   RCDATA "../assets/icons/legit_icon.jpg"
+IDR_REVIVAL_VISUALS RCDATA "../assets/icons/visuals_icon.jpg"
+IDR_REVIVAL_MISC    RCDATA "../assets/icons/misc_icon.jpg"
+IDR_REVIVAL_SCRIPTS RCDATA "../assets/icons/scripts_icon.jpg"
+IDR_REVIVAL_THEMES  RCDATA "../assets/icons/themes_icon.jpg"
+IDR_REVIVAL_CONFIGS RCDATA "../assets/icons/configs_icon.jpg"
