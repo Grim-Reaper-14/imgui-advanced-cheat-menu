@@ -136,6 +136,10 @@
     <ClInclude Include="util\StringH.hpp" />
     <ClInclude Include="util\TimeH.hpp" />
     <ClInclude Include="util\Vec2H.hpp" />
+    <ClInclude Include="resources\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\revival.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
