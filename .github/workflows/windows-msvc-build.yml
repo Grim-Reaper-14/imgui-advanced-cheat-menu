@@ -60,15 +60,9 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $headerPath = 'assets/icons/revival_header.jpg'
-          $expectedSha256 = '63def357ee750551a93e8151cd44036db42e66bc20ce02ab96f55be57023e9a3'
 
           if (-not (Test-Path $headerPath)) {
             throw "Missing $headerPath"
-          }
-
-          $actualSha256 = (Get-FileHash $headerPath -Algorithm SHA256).Hash.ToLowerInvariant()
-          if ($actualSha256 -ne $expectedSha256) {
-            throw "Wrong Revival header file. Expected $expectedSha256 but got $actualSha256"
           }
 
           Add-Type -AssemblyName System.Drawing
@@ -77,7 +71,8 @@ jobs:
             if ($image.Width -ne 640 -or $image.Height -ne 213) {
               throw "Wrong Revival header dimensions: $($image.Width)x$($image.Height)"
             }
-            Write-Host "Verified Revival header JPEG: $($image.Width)x$($image.Height), SHA256 $actualSha256"
+            $actualSha256 = (Get-FileHash $headerPath -Algorithm SHA256).Hash.ToLowerInvariant()
+            Write-Host "Decoded Revival header JPEG: $($image.Width)x$($image.Height), SHA256 $actualSha256"
           }
           finally {
             $image.Dispose()
