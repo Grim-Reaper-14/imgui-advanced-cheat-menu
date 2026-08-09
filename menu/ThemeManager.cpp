@@ -30,7 +30,7 @@ void ThemeManager::applyPreset(int preset) {
 
     switch (preset) {
     default:
-    case 0: // Gothic Purple - Revival V2 default
+    case 0:
         *Menu::winCol = rgba(5, 7, 13, 248);
         *Menu::bgCol = rgba(12, 15, 26, 252);
         *Menu::childCol = rgba(10, 13, 23, 244);
@@ -47,8 +47,7 @@ void ThemeManager::applyPreset(int preset) {
         *Menu::resizeGripHoverCol = rgba(184, 73, 255, 210);
         BackgroundManager::i().setPalette(rgba(5, 7, 14, 250), rgba(49, 19, 75, 225));
         break;
-
-    case 1: // Midnight
+    case 1:
         *Menu::winCol = rgba(10, 12, 20, 238);
         *Menu::bgCol = rgba(20, 24, 37);
         *Menu::childCol = rgba(23, 28, 44);
@@ -59,8 +58,7 @@ void ThemeManager::applyPreset(int preset) {
         *Menu::itemActiveCol = rgba(87, 112, 255);
         BackgroundManager::i().setPalette(rgba(10, 13, 28, 248), rgba(57, 26, 96, 225));
         break;
-
-    case 2: // Emerald
+    case 2:
         *Menu::winCol = rgba(7, 18, 17, 238);
         *Menu::bgCol = rgba(20, 34, 31);
         *Menu::childCol = rgba(24, 40, 36);
@@ -71,8 +69,7 @@ void ThemeManager::applyPreset(int preset) {
         *Menu::itemActiveCol = rgba(33, 186, 128);
         BackgroundManager::i().setPalette(rgba(7, 24, 20, 248), rgba(12, 85, 62, 220));
         break;
-
-    case 3: // Sunset
+    case 3:
         *Menu::winCol = rgba(27, 13, 20, 238);
         *Menu::bgCol = rgba(43, 24, 31);
         *Menu::childCol = rgba(48, 27, 37);
@@ -83,8 +80,7 @@ void ThemeManager::applyPreset(int preset) {
         *Menu::itemActiveCol = rgba(246, 88, 103);
         BackgroundManager::i().setPalette(rgba(35, 16, 31, 248), rgba(126, 45, 53, 220));
         break;
-
-    case 4: // Mono
+    case 4:
         *Menu::winCol = rgba(14, 14, 14, 240);
         *Menu::bgCol = rgba(28, 28, 28);
         *Menu::childCol = rgba(34, 34, 34);
@@ -95,8 +91,7 @@ void ThemeManager::applyPreset(int preset) {
         *Menu::itemActiveCol = rgba(190, 190, 190);
         BackgroundManager::i().setPalette(rgba(12, 12, 12, 248), rgba(55, 55, 55, 225));
         break;
-
-    case 5: // Neon
+    case 5:
         *Menu::winCol = rgba(7, 10, 17, 238);
         *Menu::bgCol = rgba(16, 22, 32);
         *Menu::childCol = rgba(18, 27, 39);
@@ -119,7 +114,6 @@ void ThemeManager::applyLiveStyle() {
     style.FrameRounding = frameRounding_->x;
     style.GrabRounding = frameRounding_->x;
     style.PopupRounding = childRounding_->x;
-
     ImGui::GetIO().FontGlobalScale = uiScale_->x;
 }
 
@@ -133,34 +127,49 @@ void ThemeManager::renderMenu() {
         "Neon"
     };
 
-    ImGui::TextUnformatted("Theme preset");
-    ImGui::SetNextItemWidth(240.0f);
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.035f, 0.045f, 0.075f, 0.92f));
+    ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.34f, 0.18f, 0.48f, 0.72f));
+
+    ImGui::BeginChild("##theme-preset-card", ImVec2(0.0f, 112.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::TextUnformatted("Theme Preset");
+    ImGui::TextDisabled("Choose the base palette for Revival V2");
+    ImGui::Spacing();
+    ImGui::SetNextItemWidth(320.0f);
     const int before = *preset_;
     if (ImGui::Combo("##theme-preset", preset_, presets, IM_ARRAYSIZE(presets)) && before != *preset_)
         applyPreset(*preset_);
+    ImGui::EndChild();
 
     ImGui::Spacing();
-    ImGui::Separator();
+    ImGui::BeginChild("##theme-background-card", ImVec2(0.0f, 500.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::TextUnformatted("Background");
+    ImGui::TextDisabled("Image, gradient, animation and tint controls");
     ImGui::Spacing();
-
     BackgroundManager::i().renderSettings();
+    ImGui::EndChild();
 
     ImGui::Spacing();
-    ImGui::Separator();
-    ImGui::Spacing();
-
+    ImGui::BeginChild("##theme-interface-card", ImVec2(0.0f, 260.0f), true, ImGuiWindowFlags_NoScrollbar);
     ImGui::TextUnformatted("Interface");
-    ImGui::SetNextItemWidth(240.0f);
+    ImGui::TextDisabled("Shape, spacing and scale");
+    ImGui::Spacing();
+
+    ImGui::SetNextItemWidth(360.0f);
     ImGui::SliderFloat("Window rounding", &windowRounding_->x, windowRounding_->y, windowRounding_->z, "%.0f");
-    ImGui::SetNextItemWidth(240.0f);
+    ImGui::SetNextItemWidth(360.0f);
     ImGui::SliderFloat("Panel rounding", &childRounding_->x, childRounding_->y, childRounding_->z, "%.0f");
-    ImGui::SetNextItemWidth(240.0f);
+    ImGui::SetNextItemWidth(360.0f);
     ImGui::SliderFloat("Control rounding", &frameRounding_->x, frameRounding_->y, frameRounding_->z, "%.0f");
-    ImGui::SetNextItemWidth(240.0f);
+    ImGui::SetNextItemWidth(360.0f);
     ImGui::SliderFloat("UI scale", &uiScale_->x, uiScale_->y, uiScale_->z, "%.2fx");
 
-    if (ImGui::Button("Reset preset colors"))
+    ImGui::Spacing();
+    if (ImGui::Button("Reset preset colors", ImVec2(200.0f, 36.0f)))
         applyPreset(*preset_);
 
+    ImGui::EndChild();
+    ImGui::PopStyleColor(2);
+
+    ImGui::Dummy(ImVec2(0.0f, 18.0f));
     applyLiveStyle();
 }
