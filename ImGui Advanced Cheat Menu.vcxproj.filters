@@ -29,6 +29,12 @@
     <ClCompile Include="menu\imgui_custom.cpp"><Filter>Menu</Filter></ClCompile>
     <ClCompile Include="menu\imgui_helper.cpp"><Filter>Menu</Filter></ClCompile>
     <ClCompile Include="scripting\LuaManager.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_Bindings.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_Commands.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_Module.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_Scripts_Manager.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_binding_library.cpp"><Filter>Scripting</Filter></ClCompile>
+    <ClCompile Include="scripting\Lua_run_time.cpp"><Filter>Scripting</Filter></ClCompile>
     <ClCompile Include="util\ColorH.cpp"><Filter>Utilities</Filter></ClCompile>
     <ClCompile Include="util\FileH.cpp"><Filter>Utilities</Filter></ClCompile>
     <ClCompile Include="util\MH.cpp"><Filter>Utilities</Filter></ClCompile>
@@ -63,6 +69,12 @@
     <ClInclude Include="menu\imgui_helper.hpp"><Filter>Menu</Filter></ClInclude>
     <ClInclude Include="menu\imgui_notify.h"><Filter>Menu</Filter></ClInclude>
     <ClInclude Include="scripting\LuaManager.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_Bindings.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_Commands.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_Module.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_Scripts_Manager.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_binding_library.hpp"><Filter>Scripting</Filter></ClInclude>
+    <ClInclude Include="scripting\Lua_run_time.hpp"><Filter>Scripting</Filter></ClInclude>
     <ClInclude Include="util\ColorH.hpp"><Filter>Utilities</Filter></ClInclude>
     <ClInclude Include="util\FileH.hpp"><Filter>Utilities</Filter></ClInclude>
     <ClInclude Include="util\MH.hpp"><Filter>Utilities</Filter></ClInclude>
