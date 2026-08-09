@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  statuses: write
 
 jobs:
   build-release-x64:
@@ -24,8 +25,64 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Build Release x64
+        id: build
         shell: pwsh
         run: |
-          $ErrorActionPreference = 'Stop'
-          msbuild '.\ImGui Advanced Cheat Menu.vcxproj' /m /p:Configuration=Release /p:Platform=x64 /verbosity:minimal
-          if ($LASTEXITCODE -ne 0) { throw "MSBuild failed with exit code $LASTEXITCODE" }
+          $log = Join-Path $env:RUNNER_TEMP 'msbuild.log'
+          & msbuild '.\ImGui Advanced Cheat Menu.vcxproj' /m /p:Configuration=Release /p:Platform=x64 /verbosity:minimal 2>&1 | Tee-Object -FilePath $log
+          $exitCode = $LASTEXITCODE
+          $state = if ($exitCode -eq 0) { 'success' } else { 'failure' }
+          "state=$state" >> $env:GITHUB_OUTPUT
+          "exit_code=$exitCode" >> $env:GITHUB_OUTPUT
+          Write-Host "MSBuild exit code: $exitCode"
+
+      - name: Publish commit status
+        if: always()
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_STATE: ${{ steps.build.outputs.state }}
+        run: |
+          $state = if ($env:BUILD_STATE) { $env:BUILD_STATE } else { 'failure' }
+          gh api --method POST "repos/$env:GITHUB_REPOSITORY/statuses/$env:GITHUB_SHA" -f state="$state" -f context='Windows MSVC Build' -f description="Release x64 MSVC build: $state"
+
+      - name: Publish build log
+        if: always()
+        shell: pwsh
+        env:
+          BUILD_STATE: ${{ steps.build.outputs.state }}
+          BUILD_EXIT_CODE: ${{ steps.build.outputs.exit_code }}
+        run: |
+          $state = if ($env:BUILD_STATE) { $env:BUILD_STATE } else { 'failure' }
+          $exitCode = if ($env:BUILD_EXIT_CODE) { $env:BUILD_EXIT_CODE } else { '-1' }
+          $resultDir = Join-Path $env:RUNNER_TEMP 'ci-build-results'
+
+          git fetch origin ci-build-results 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            git worktree add -B ci-build-results $resultDir origin/ci-build-results
+          } else {
+            git worktree add --detach $resultDir
+            git -C $resultDir switch --orphan ci-build-results
+          }
+
+          Copy-Item (Join-Path $env:RUNNER_TEMP 'msbuild.log') (Join-Path $resultDir 'latest.log') -Force
+          [ordered]@{
+            source_sha = $env:GITHUB_SHA
+            state = $state
+            exit_code = [int]$exitCode
+            run_id = $env:GITHUB_RUN_ID
+            run_attempt = $env:GITHUB_RUN_ATTEMPT
+            runner = $env:RUNNER_NAME
+            completed_utc = (Get-Date).ToUniversalTime().ToString('o')
+          } | ConvertTo-Json | Set-Content (Join-Path $resultDir 'status.json')
+
+          git -C $resultDir config user.name 'github-actions[bot]'
+          git -C $resultDir config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C $resultDir add -- latest.log status.json
+          git -C $resultDir commit -m "ci: record Windows MSVC build for $env:GITHUB_SHA"
+          git -C $resultDir push origin HEAD:ci-build-results --force
+
+      - name: Fail job when MSBuild fails
+        if: steps.build.outputs.state != 'success'
+        shell: pwsh
+        run: exit 1
