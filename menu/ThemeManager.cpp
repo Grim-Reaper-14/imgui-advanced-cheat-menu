@@ -16,8 +16,8 @@ namespace {
 ThemeManager::ThemeManager() {
     preset_ = &SetManager::i().add(new Set(0, "themePreset", "Appearance")).getIVal();
     windowRounding_ = &SetManager::i().add(new Set(8.0f, 0.0f, 24.0f, "windowRounding", "Appearance")).getVec3f();
-    childRounding_ = &SetManager::i().add(new Set(8.0f, 0.0f, 24.0f, "childRounding", "Appearance")).getVec3f();
-    frameRounding_ = &SetManager::i().add(new Set(4.0f, 0.0f, 16.0f, "frameRounding", "Appearance")).getVec3f();
+    childRounding_ = &SetManager::i().add(new Set(9.0f, 0.0f, 24.0f, "childRounding", "Appearance")).getVec3f();
+    frameRounding_ = &SetManager::i().add(new Set(6.0f, 0.0f, 16.0f, "frameRounding", "Appearance")).getVec3f();
     uiScale_ = &SetManager::i().add(new Set(1.0f, 0.80f, 1.35f, "uiScale", "Appearance")).getVec3f();
 }
 
@@ -30,16 +30,22 @@ void ThemeManager::applyPreset(int preset) {
 
     switch (preset) {
     default:
-    case 0: // Classic Red
-        *Menu::winCol = rgba(0, 0, 0, 230);
-        *Menu::bgCol = rgba(31, 30, 31);
-        *Menu::childCol = rgba(33, 34, 45);
-        *Menu::childCol1 = rgba(38, 39, 50);
-        *Menu::btnActiveCol = rgba(239, 73, 88);
-        *Menu::btnHoverCol = rgba(173, 55, 65);
-        *Menu::itemCol = rgba(240, 74, 88);
-        *Menu::itemActiveCol = rgba(240, 50, 66);
-        BackgroundManager::i().setPalette(rgba(18, 15, 18, 245), rgba(95, 22, 35, 210));
+    case 0: // Gothic Purple - Revival V2 default
+        *Menu::winCol = rgba(5, 7, 13, 248);
+        *Menu::bgCol = rgba(12, 15, 26, 252);
+        *Menu::childCol = rgba(10, 13, 23, 244);
+        *Menu::childCol1 = rgba(15, 18, 31, 248);
+        *Menu::notSelectedTextColor = rgba(178, 170, 196);
+        *Menu::textCol = rgba(245, 240, 252);
+        *Menu::btnActiveCol = rgba(92, 31, 151);
+        *Menu::btnHoverCol = rgba(68, 28, 111);
+        *Menu::frameCol = rgba(31, 24, 47);
+        *Menu::hoverCol = rgba(26, 20, 40);
+        *Menu::itemCol = rgba(148, 57, 224);
+        *Menu::itemActiveCol = rgba(183, 72, 255);
+        *Menu::resizeGripCol = rgba(126, 42, 196, 155);
+        *Menu::resizeGripHoverCol = rgba(184, 73, 255, 210);
+        BackgroundManager::i().setPalette(rgba(5, 7, 14, 250), rgba(49, 19, 75, 225));
         break;
 
     case 1: // Midnight
@@ -119,7 +125,7 @@ void ThemeManager::applyLiveStyle() {
 
 void ThemeManager::renderMenu() {
     static const char* presets[] = {
-        "Classic Red",
+        "Gothic Purple",
         "Midnight",
         "Emerald",
         "Sunset",
