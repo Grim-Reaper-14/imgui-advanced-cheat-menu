@@ -1,6 +1,0 @@
-[submodule "dependencies/imgui"]
-	path = dependencies/imgui
-	url = https://github.com/ocornut/imgui.git
-[submodule "dependencies/imgui-sfml-src"]
-	path = dependencies/imgui-sfml-src
-	url = https://github.com/SFML/imgui-sfml.git
