@@ -166,7 +166,6 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): messa
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<7>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\Console.cpp(42): message : see reference to class template instantiation 'Obf::Xor_String<7>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   imgui_custom.cpp
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui_internal.h(113,1): fatal error C1189: #error:  Please '#define IMGUI_DEFINE_MATH_OPERATORS' _BEFORE_ including imgui.h! [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   imgui_helper.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
@@ -240,8 +239,17 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): wa
           [
               _Elem=char
           ]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\BackgroundManager.cpp(44,33): error C2440: 'initializing': cannot convert from 'nullptr' to 'ImTextureID' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\BackgroundManager.cpp(44,24): message : A native nullptr can only be converted to bool or, using reinterpret_cast, to an integral type [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.29.30133\include\algorithm(2650,24): warning C4244: 'argument': conversion from 'unsigned __int64' to 'char', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): message : see reference to function template instantiation '_OutIt std::transform<std::_Array_iterator<_Ty,7>,std::back_insert_iterator<std::string>,Obf::Xor_String<7>::()::<lambda_285aff0997dc27047962093a73979688>>(const _InIt,const _InIt,_OutIt,_Fn)' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::string>,
+              _Ty=char,
+              _InIt=std::_Array_iterator<char,7>,
+              _Fn=Obf::Xor_String<7>::()::<lambda_285aff0997dc27047962093a73979688>
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<7>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\Menu.hpp(10): message : see reference to class template instantiation 'Obf::Xor_String<7>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   ImageLoader.cpp
   ThemeManager.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
@@ -369,28 +377,17 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): 
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(152,49): error C3861: 'GetTickCount64': identifier not found [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(156,1): error C3313: 'elapsed': variable cannot have the type 'const void' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(158,1): error C3536: 'elapsed': cannot be used before it is initialized [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(179,1): error C3313: 'elapsed': variable cannot have the type 'const void' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(183,1): error C3536: 'elapsed': cannot be used before it is initialized [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(202,25): error C3861: 'GetTickCount64': identifier not found [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(220,39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(220,21): error C2146: syntax error: missing ';' before identifier 'InsertNotification' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(221,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(223,2): warning C4508: 'ImGui::InsertNotification': function should return a value; 'void' return type assumed [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(229,39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(229,16): error C2086: 'int ImGui::VOID': redefinition [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(220): message : see declaration of 'ImGui::VOID' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(229,21): error C2146: syntax error: missing ';' before identifier 'RemoveNotification' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(230,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(232,2): warning C4508: 'ImGui::RemoveNotification': function should return a value; 'void' return type assumed [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(237,40): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(237,16): error C2086: 'int ImGui::VOID': redefinition [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(220): message : see declaration of 'ImGui::VOID' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(237,21): error C2146: syntax error: missing ';' before identifier 'RenderNotifications' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(238,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(335,2): warning C4508: 'ImGui::RenderNotifications': function should return a value; 'void' return type assumed [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.29.30133\include\algorithm(2650,24): warning C4244: 'argument': conversion from 'unsigned __int64' to 'char', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): message : see reference to function template instantiation '_OutIt std::transform<std::_Array_iterator<_Ty,7>,std::back_insert_iterator<std::string>,Obf::Xor_String<7>::()::<lambda_285aff0997dc27047962093a73979688>>(const _InIt,const _InIt,_OutIt,_Fn)' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::string>,
+              _Ty=char,
+              _InIt=std::_Array_iterator<char,7>,
+              _Fn=Obf::Xor_String<7>::()::<lambda_285aff0997dc27047962093a73979688>
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<7>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\Menu.hpp(10): message : see reference to class template instantiation 'Obf::Xor_String<7>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   LuaManager.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
           with
@@ -445,3 +442,19 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.cpp(89,14): war
   StringH.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   TimeH.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(159): warning C4715: 'ImGuiToast::get_icon': not all control paths return a value [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(142): warning C4715: 'ImGuiToast::get_color': not all control paths return a value [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(140): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(138): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(136): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(134): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(132): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(171): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(175): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(179): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(183): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(292): error C4703: potentially uninitialized local pointer variable 'icon' used [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  All 4499 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+LINK : fatal error LNK1257: code generation failed [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
