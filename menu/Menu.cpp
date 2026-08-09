@@ -8,6 +8,7 @@
 #include "../RCS.hpp"
 #include "../scripting/LuaManager.hpp"
 #include "BackgroundManager.hpp"
+#include "Console.hpp"
 #include "Fonts.hpp"
 #include "ImageLoader.hpp"
 #include "ThemeManager.hpp"
@@ -15,6 +16,9 @@
 #include <imgui-SFML.h>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include <Windows.h>
+
+#include <algorithm>
 #include <array>
 #include <filesystem>
 #include <string>
@@ -27,44 +31,101 @@ namespace {
     constexpr float kWindowHeight = 800.0f;
     constexpr float kHeaderHeight = 244.0f;
     constexpr float kNavWidth = 186.0f;
-    constexpr float kNavHeight = 46.0f;
+    constexpr float kNavHeight = 48.0f;
+    constexpr float kStatusHeight = 82.0f;
 
-    constexpr const char* kScriptFallbackIcon = "\xEF\x84\xA1"; // Font Awesome code
-    constexpr const char* kThemeFallbackIcon = "\xEF\x94\xBF";  // Font Awesome palette
+    constexpr const char* kLegitIcon = ICON_FA_CROSSHAIRS;
+    constexpr const char* kVisualIcon = ICON_FA_EYE;
+    constexpr const char* kMiscIcon = ICON_FA_COG;
+    constexpr const char* kScriptIcon = "\xEF\x84\xA1"; // Font Awesome code
+    constexpr const char* kThemeIcon = "\xEF\x94\xBF";  // Font Awesome palette
+    constexpr const char* kConfigIcon = ICON_FA_SAVE;
 
-    std::filesystem::path resolveAsset(const char* fileName) {
-        std::error_code ec;
-        std::filesystem::path base = std::filesystem::current_path(ec);
-        if (ec)
+    std::filesystem::path executableDirectory() {
+        std::array<wchar_t, 32768> buffer{};
+        const DWORD length = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
+        if (length == 0 || length >= buffer.size())
             return {};
 
-        for (int depth = 0; depth < 5; ++depth) {
+        return std::filesystem::path(buffer.data(), buffer.data() + length).parent_path();
+    }
+
+    std::filesystem::path findAssetFrom(std::filesystem::path base, const char* fileName) {
+        if (base.empty())
+            return {};
+
+        std::error_code ec;
+        for (int depth = 0; depth < 10; ++depth) {
             const auto candidate = base / "assets" / "icons" / fileName;
             if (std::filesystem::exists(candidate, ec) && !ec)
                 return candidate;
 
+            ec.clear();
             if (!base.has_parent_path())
                 break;
-            base = base.parent_path();
+
+            const auto parent = base.parent_path();
+            if (parent == base)
+                break;
+            base = parent;
         }
 
         return {};
     }
 
-    void loadUiAsset(const char* id, const char* fileName) {
-        const auto path = resolveAsset(fileName);
-        if (!path.empty())
-            ImageLoader::i().loadFromFile(id, path, true, false);
+    std::filesystem::path resolveAsset(const char* fileName) {
+        std::error_code ec;
+
+        const auto cwd = std::filesystem::current_path(ec);
+        if (!ec) {
+            if (const auto path = findAssetFrom(cwd, fileName); !path.empty())
+                return path;
+        }
+
+        if (const auto path = findAssetFrom(executableDirectory(), fileName); !path.empty())
+            return path;
+
+        // MSVC commonly expands __FILE__ to a full project path. This gives us
+        // one more reliable anchor when launching from an unrelated working directory.
+        const std::filesystem::path sourceFile = __FILE__;
+        if (sourceFile.is_absolute()) {
+            if (const auto path = findAssetFrom(sourceFile.parent_path(), fileName); !path.empty())
+                return path;
+        }
+
+        return {};
     }
 
-    void renderImageNavItem(int index, const char* label, const char* imageId, const char* fallbackIcon) {
+    bool loadUiAsset(const char* id, const char* fileName) {
+        const auto path = resolveAsset(fileName);
+        if (path.empty()) {
+            Console::i().logError(std::string("Missing Revival UI asset: ") + fileName);
+            return false;
+        }
+
+        if (!ImageLoader::i().loadFromFile(id, path, true, false)) {
+            Console::i().logError(std::string("Failed to load Revival UI asset: ") + path.string());
+            return false;
+        }
+
+        Console::i().logInfo(std::string("Loaded Revival UI asset: ") + path.string());
+        return true;
+    }
+
+    void renderNavItem(
+        int index,
+        const char* label,
+        const char* fallbackIcon,
+        const char* imageId = nullptr) {
         const bool selected = Menu::state.selectedTab == index;
         const ImVec4 transparent(0.0f, 0.0f, 0.0f, 0.0f);
 
         const ImVec2 start = ImGui::GetCursorScreenPos();
         const std::string id = "##nav-" + std::to_string(index);
 
-        ImGui::PushStyleColor(ImGuiCol_Header, selected ? Menu::style->Colors[ImGuiCol_ButtonActive] : transparent);
+        ImGui::PushStyleColor(
+            ImGuiCol_Header,
+            selected ? Menu::style->Colors[ImGuiCol_ButtonActive] : transparent);
         ImGui::PushStyleColor(ImGuiCol_HeaderHovered, Menu::style->Colors[ImGuiCol_ButtonHovered]);
         ImGui::PushStyleColor(ImGuiCol_HeaderActive, Menu::style->Colors[ImGuiCol_ButtonActive]);
         if (ImGui::Selectable(id.c_str(), selected, 0, ImVec2(kNavWidth, kNavHeight)))
@@ -72,17 +133,41 @@ namespace {
         ImGui::PopStyleColor(3);
 
         const ImVec2 after = ImGui::GetCursorScreenPos();
-        if (sf::Texture* texture = ImageLoader::i().get(imageId)) {
-            ImGui::SetCursorScreenPos(ImVec2(start.x + 8.0f, start.y + 7.0f));
-            ImGui::Image(*texture, sf::Vector2f(32.0f, 32.0f));
+        const ImVec2 iconMin(start.x + 8.0f, start.y + 7.0f);
+        const ImVec2 iconMax(iconMin.x + 34.0f, iconMin.y + 34.0f);
+
+        ImDrawList* draw = ImGui::GetWindowDrawList();
+        draw->AddRectFilled(
+            iconMin,
+            iconMax,
+            selected ? IM_COL32(255, 255, 255, 34) : IM_COL32(7, 10, 16, 150),
+            6.0f);
+        draw->AddRect(
+            iconMin,
+            iconMax,
+            selected ? IM_COL32(255, 255, 255, 65) : IM_COL32(68, 76, 92, 80),
+            6.0f);
+
+        sf::Texture* texture = imageId ? ImageLoader::i().get(imageId) : nullptr;
+        if (texture) {
+            ImGui::SetCursorScreenPos(ImVec2(iconMin.x + 2.0f, iconMin.y + 2.0f));
+            ImGui::Image(*texture, sf::Vector2f(30.0f, 30.0f));
         }
         else {
-            ImGui::SetCursorScreenPos(ImVec2(start.x + 11.0f, start.y + 13.0f));
+            ImGui::SetCursorScreenPos(ImVec2(iconMin.x + 8.0f, iconMin.y + 8.0f));
+            ImGui::PushStyleColor(
+                ImGuiCol_Text,
+                selected ? ImVec4(1.0f, 1.0f, 1.0f, 1.0f) : *Menu::notSelectedTextColor);
             ImGui::TextUnformatted(fallbackIcon);
+            ImGui::PopStyleColor();
         }
 
-        ImGui::SetCursorScreenPos(ImVec2(start.x + 50.0f, start.y + 13.0f));
+        ImGui::SetCursorScreenPos(ImVec2(start.x + 52.0f, start.y + 14.0f));
+        ImGui::PushStyleColor(
+            ImGuiCol_Text,
+            selected ? Menu::style->Colors[ImGuiCol_Text] : *Menu::notSelectedTextColor);
         ImGui::TextUnformatted(label);
+        ImGui::PopStyleColor();
         ImGui::SetCursorScreenPos(after);
     }
 }
@@ -152,7 +237,7 @@ void Menu::loadTheme() {
     style->FrameRounding = 5.0f;
     style->GrabRounding = 5.0f;
     style->PopupRounding = 7.0f;
-    style->ScrollbarSize = 10.0f;
+    style->ScrollbarSize = 11.0f;
     style->WindowPadding = ImVec2(16.0f, 16.0f);
     style->FramePadding = ImVec2(8.0f, 6.0f);
     style->ItemSpacing = ImVec2(8.0f, 8.0f);
@@ -172,7 +257,9 @@ void Menu::renderLogo() {
         "##revival-brand-header",
         ImVec2(0.0f, kHeaderHeight),
         true,
-        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoInputs);
+        ImGuiWindowFlags_NoScrollbar |
+            ImGuiWindowFlags_NoScrollWithMouse |
+            ImGuiWindowFlags_NoInputs);
 
     if (sf::Texture* texture = ImageLoader::i().get("revival.header")) {
         const ImVec2 available = ImGui::GetContentRegionAvail();
@@ -188,7 +275,9 @@ void Menu::renderLogo() {
 
             const float offsetX = (available.x - width) * 0.5f;
             const float offsetY = (available.y - height) * 0.5f;
-            ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + offsetX, ImGui::GetCursorPosY() + offsetY));
+            ImGui::SetCursorPos(ImVec2(
+                ImGui::GetCursorPosX() + offsetX,
+                ImGui::GetCursorPosY() + offsetY));
             ImGui::Image(*texture, sf::Vector2f(width, height));
         }
     }
@@ -197,19 +286,18 @@ void Menu::renderLogo() {
         ImGui::PushFont(bigFont);
         ImGui::TextUnformatted("REVIVAL V2");
         ImGui::PopFont();
-        ImGui::TextDisabled("Reaper Build");
+        ImGui::TextDisabled("Reaper Build - artwork missing");
     }
 
     ImGui::EndChild();
 }
 
 void Menu::renderUser() {
-    constexpr float height = 82.0f;
-    const float remaining = ImGui::GetContentRegionAvail().y;
-    if (remaining > height)
-        ImGui::Dummy(ImVec2(0.0f, remaining - height - style->ItemSpacing.y));
-
-    ImGui::BeginChild("##sidebar-status", ImVec2(kSidebarInnerWidth, height), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild(
+        "##sidebar-status",
+        ImVec2(kSidebarInnerWidth, kStatusHeight),
+        true,
+        ImGuiWindowFlags_NoScrollbar);
     ImGui::TextUnformatted("Revival v2.1");
     ImGui::Spacing();
     ImGui::TextDisabled("%.0f FPS", ImGui::GetIO().Framerate);
@@ -223,49 +311,52 @@ void Menu::renderPanel() {
 }
 
 void Menu::renderTabs() {
-    ImGui::BeginChild("##sidebar-tabs", ImVec2(kSidebarInnerWidth, 374.0f), true, ImGuiWindowFlags_NoScrollbar);
+    const float availableHeight = ImGui::GetContentRegionAvail().y;
+    const float tabsHeight = std::max(
+        180.0f,
+        availableHeight - kStatusHeight - style->ItemSpacing.y);
+
+    ImGui::BeginChild(
+        "##sidebar-tabs",
+        ImVec2(kSidebarInnerWidth, tabsHeight),
+        true,
+        ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
     static ImGuiTextFilter2 filter;
-    filter.Draw2(ICON_FA_SEARCH " Search", kNavWidth);
+    filter.Draw2(ICON_FA_SEARCH " Search", kNavWidth - style->ScrollbarSize - 3.0f);
     ImGui::Spacing();
 
-    const std::array<std::string, 6> tabNames = {
-        obf(ICON_FA_CROSSHAIRS " LegitBot"),
-        obf(ICON_FA_EYE " Visuals"),
-        obf(ICON_FA_COG " Misc"),
-        "Scripts",
-        "Themes",
-        obf(ICON_FA_SAVE " Configs")
+    struct NavEntry {
+        const char* label;
+        const char* fallbackIcon;
+        const char* imageId;
     };
 
-    const ImVec4 transparent(0.0f, 0.0f, 0.0f, 0.0f);
+    const std::array<NavEntry, 6> navEntries = {{
+        { "LegitBot", kLegitIcon, nullptr },
+        { "Visuals", kVisualIcon, nullptr },
+        { "Misc", kMiscIcon, nullptr },
+        { "Scripts", kScriptIcon, "revival.scripts" },
+        { "Themes", kThemeIcon, "revival.themes" },
+        { "Configs", kConfigIcon, nullptr },
+    }};
+
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
 
-    for (int i = 0; i < static_cast<int>(tabNames.size()); ++i) {
-        if (!filter.PassFilter(tabNames[i].c_str()))
+    for (int i = 0; i < static_cast<int>(navEntries.size()); ++i) {
+        const auto& entry = navEntries[i];
+        if (!filter.PassFilter(entry.label))
             continue;
 
-        if (i == 3) {
-            renderImageNavItem(i, "Scripts", "revival.scripts", kScriptFallbackIcon);
-            continue;
-        }
-        if (i == 4) {
-            renderImageNavItem(i, "Themes", "revival.themes", kThemeFallbackIcon);
-            continue;
-        }
-
-        const bool selected = state.selectedTab == i;
-        ImGui::PushStyleColor(ImGuiCol_Button, selected ? style->Colors[ImGuiCol_ButtonActive] : transparent);
-        ImGui::PushStyleColor(ImGuiCol_Text, selected ? style->Colors[ImGuiCol_Text] : *notSelectedTextColor);
-
-        if (ImGui::Button(tabNames[i].c_str(), ImVec2(kNavWidth, kNavHeight)))
-            state.selectedTab = i;
-
-        ImGui::PopStyleColor(2);
+        renderNavItem(i, entry.label, entry.fallbackIcon, entry.imageId);
+        ImGui::Dummy(ImVec2(0.0f, 2.0f));
     }
 
-    ImGui::PopStyleVar(2);
+    // Reserve some vertical room so the scrollbar remains useful as more
+    // Revival pages are added instead of forcing another layout rewrite.
+    ImGui::Dummy(ImVec2(0.0f, 70.0f));
+
+    ImGui::PopStyleVar();
     ImGui::EndChild();
 }
 
