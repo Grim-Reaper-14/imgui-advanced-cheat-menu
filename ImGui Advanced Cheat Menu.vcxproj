@@ -91,6 +91,12 @@
     <ClCompile Include="SetManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="scripting\LuaManager.cpp" />
+    <ClCompile Include="scripting\Lua_Bindings.cpp" />
+    <ClCompile Include="scripting\Lua_Commands.cpp" />
+    <ClCompile Include="scripting\Lua_Module.cpp" />
+    <ClCompile Include="scripting\Lua_Scripts_Manager.cpp" />
+    <ClCompile Include="scripting\Lua_binding_library.cpp" />
+    <ClCompile Include="scripting\Lua_run_time.cpp" />
     <ClCompile Include="util\ColorH.cpp" />
     <ClCompile Include="util\FileH.cpp" />
     <ClCompile Include="util\MH.cpp" />
@@ -128,6 +134,12 @@
     <ClInclude Include="Set.hpp" />
     <ClInclude Include="SetManager.hpp" />
     <ClInclude Include="scripting\LuaManager.hpp" />
+    <ClInclude Include="scripting\Lua_Bindings.hpp" />
+    <ClInclude Include="scripting\Lua_Commands.hpp" />
+    <ClInclude Include="scripting\Lua_Module.hpp" />
+    <ClInclude Include="scripting\Lua_Scripts_Manager.hpp" />
+    <ClInclude Include="scripting\Lua_binding_library.hpp" />
+    <ClInclude Include="scripting\Lua_run_time.hpp" />
     <ClInclude Include="util\ColorH.hpp" />
     <ClInclude Include="util\FileH.hpp" />
     <ClInclude Include="util\MH.hpp" />
