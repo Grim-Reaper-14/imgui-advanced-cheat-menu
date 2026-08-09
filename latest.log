@@ -444,17 +444,6 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31
   TimeH.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(159): warning C4715: 'ImGuiToast::get_icon': not all control paths return a value [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(142): warning C4715: 'ImGuiToast::get_color': not all control paths return a value [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(140): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(138): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(136): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(134): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(132): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(171): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(175): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(179): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(183): warning C4172: returning address of local variable or temporary [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\imgui_notify.h(292): error C4703: potentially uninitialized local pointer variable 'icon' used [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   All 4499 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-LINK : fatal error LNK1257: code generation failed [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Finished generating code
+  ImGui Advanced Cheat Menu.vcxproj -> D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\x64\Release\ImGui Advanced Cheat Menu.exe
