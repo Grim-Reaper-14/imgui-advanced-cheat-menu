@@ -15,9 +15,48 @@
 
 #include <Windows.h>
 
+#include <array>
+#include <filesystem>
+
 namespace {
     constexpr unsigned int kWindowWidth = 1180;
     constexpr unsigned int kWindowHeight = 860;
+
+    std::filesystem::path executableDirectory() {
+        std::array<wchar_t, 32768> buffer{};
+        const DWORD length = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
+        if (length == 0 || length >= buffer.size())
+            return {};
+        return std::filesystem::path(buffer.data(), buffer.data() + length).parent_path();
+    }
+
+    std::filesystem::path findProjectRoot(std::filesystem::path base) {
+        std::error_code ec;
+        for (int depth = 0; depth < 10 && !base.empty(); ++depth) {
+            if (std::filesystem::is_directory(base / "assets", ec) && !ec)
+                return base;
+            ec.clear();
+            const auto parent = base.parent_path();
+            if (parent == base)
+                break;
+            base = parent;
+        }
+        return {};
+    }
+
+    void normalizeWorkingDirectory() {
+        std::error_code ec;
+        const auto cwd = std::filesystem::current_path(ec);
+        if (!ec) {
+            if (const auto root = findProjectRoot(cwd); !root.empty()) {
+                std::filesystem::current_path(root, ec);
+                return;
+            }
+        }
+
+        if (const auto root = findProjectRoot(executableDirectory()); !root.empty())
+            std::filesystem::current_path(root, ec);
+    }
 
     void setWindowVisible(sf::RenderWindow& window, bool visible) {
         HWND hwnd = reinterpret_cast<HWND>(window.getSystemHandle());
@@ -65,6 +104,8 @@ namespace {
 }
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+    normalizeWorkingDirectory();
+
     sf::RenderWindow window(
         sf::VideoMode(kWindowWidth, kWindowHeight),
         obf("Revival V2"),
