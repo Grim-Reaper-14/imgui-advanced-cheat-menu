@@ -401,6 +401,57 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): messa
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<7>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\menu\Menu.hpp(10): message : see reference to class template instantiation 'Obf::Xor_String<7>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   LuaManager.cpp
+  Lua_Bindings.cpp
+  Lua_Commands.cpp
+  Lua_Module.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.29.30133\include\algorithm(2650,24): warning C4244: 'argument': conversion from 'unsigned __int64' to 'char', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): message : see reference to function template instantiation '_OutIt std::transform<std::_Array_iterator<_Ty,11>,std::back_insert_iterator<std::string>,Obf::Xor_String<11>::()::<lambda_cb9441edf80a7da409242e43140e2eb4>>(const _InIt,const _InIt,_OutIt,_Fn)' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::string>,
+              _Ty=char,
+              _InIt=std::_Array_iterator<char,11>,
+              _Fn=Obf::Xor_String<11>::()::<lambda_cb9441edf80a7da409242e43140e2eb4>
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<11>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\Module.hpp(42): message : see reference to class template instantiation 'Obf::Xor_String<11>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Lua_Scripts_Manager.cpp
+  Lua_binding_library.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Lua_run_time.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\lgc.c(447,21): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\lgc.c(524,21): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\lgc.c(728,19): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\lgc.c(747,23): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ltable.c(373,5): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ldo.c(114,1): warning C4297: 'luaD_throw': function assumed not to throw an exception but does [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ldo.c(114,1): message : The function is extern "C" and /EHc was specified [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   ColorH.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   FileH.cpp
@@ -427,17 +478,8 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.cpp(89,14): war
   StringH.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   TimeH.cpp
-LuaManager.obj : error LNK2001: unresolved external symbol "public: static void __cdecl LuaBindings::bind(class LuaRuntime &,class std::filesystem::path const &)" (?bind@LuaBindings@@SAXAEAVLuaRuntime@@AEBVpath@filesystem@std@@@Z) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: void __cdecl LuaScriptsManager::renderMenu(void)" (?renderMenu@LuaScriptsManager@@QEAAXXZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: void __cdecl LuaScriptsManager::update(float)" (?update@LuaScriptsManager@@QEAAXM@Z) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: void __cdecl LuaScriptsManager::shutdown(void)" (?shutdown@LuaScriptsManager@@QEAAXXZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: void __cdecl LuaScriptsManager::initialize(class LuaRuntime &,class std::filesystem::path const &)" (?initialize@LuaScriptsManager@@QEAAXAEAVLuaRuntime@@AEBVpath@filesystem@std@@@Z) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: __cdecl LuaScriptsManager::~LuaScriptsManager(void)" (??1LuaScriptsManager@@QEAA@XZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: __cdecl LuaScriptsManager::LuaScriptsManager(void)" (??0LuaScriptsManager@@QEAA@XZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const & __cdecl LuaRuntime::status(void)const " (?status@LuaRuntime@@QEBAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: bool __cdecl LuaRuntime::isAvailable(void)const " (?isAvailable@LuaRuntime@@QEBA_NXZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: void __cdecl LuaRuntime::shutdown(void)" (?shutdown@LuaRuntime@@QEAAXXZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol "public: bool __cdecl LuaRuntime::initialize(void)" (?initialize@LuaRuntime@@QEAA_NXZ) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol luaL_unref [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-LuaManager.obj : error LNK2001: unresolved external symbol lua_close [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\x64\Release\ImGui Advanced Cheat Menu.exe : fatal error LNK1120: 13 unresolved externals [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 8458 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ImGui Advanced Cheat Menu.vcxproj -> D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\x64\Release\ImGui Advanced Cheat Menu.exe
