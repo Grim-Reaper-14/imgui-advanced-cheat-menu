@@ -1,0 +1,31 @@
+name: Windows MSVC Build
+
+on:
+  push:
+    branches:
+      - revival-v2-cleanup
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-release-x64:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build Release x64
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          msbuild '.\ImGui Advanced Cheat Menu.vcxproj' /m /p:Configuration=Release /p:Platform=x64 /verbosity:minimal
+          if ($LASTEXITCODE -ne 0) { throw "MSBuild failed with exit code $LASTEXITCODE" }
