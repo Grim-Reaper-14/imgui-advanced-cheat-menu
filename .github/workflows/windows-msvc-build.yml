@@ -126,3 +126,4 @@ jobs:
 # Revival V2 scripting dependency validation
 # Final UI + Lua validation
 # Validate post-Sol2 macro isolation fix
+# Validate corrected artwork header, main scrolling, and six image nav icons
