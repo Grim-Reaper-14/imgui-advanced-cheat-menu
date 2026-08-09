@@ -9,8 +9,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\imgui-sfml\lib</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\imgui-sfml-src;$(SolutionDir)Dependencies\imgui-sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>IMGUI_USER_CONFIG=&lt;imconfig-SFML.h&gt;;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\imgui;$(SolutionDir)dependencies\imgui-sfml-src;$(SolutionDir)dependencies\sol2\include;$(SolutionDir)dependencies\lua;$(SolutionDir)Dependencies\imgui-sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>IMGUI_USER_CONFIG=&lt;imconfig-SFML.h&gt;;SFML_STATIC;MENU_ENABLE_LUA=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
