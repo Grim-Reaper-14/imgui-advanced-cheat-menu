@@ -37,17 +37,62 @@ namespace {
     struct EmbeddedAsset {
         const char* id;
         int resourceId;
+        const char* fileName;
     };
 
     constexpr std::array<EmbeddedAsset, 7> kEmbeddedAssets = {{
-        { "revival.header", IDR_REVIVAL_HEADER },
-        { "revival.legit", IDR_REVIVAL_LEGIT },
-        { "revival.visuals", IDR_REVIVAL_VISUALS },
-        { "revival.misc", IDR_REVIVAL_MISC },
-        { "revival.scripts", IDR_REVIVAL_SCRIPTS },
-        { "revival.themes", IDR_REVIVAL_THEMES },
-        { "revival.configs", IDR_REVIVAL_CONFIGS },
+        { "revival.header", IDR_REVIVAL_HEADER, "revival_header.jpg" },
+        { "revival.legit", IDR_REVIVAL_LEGIT, "legit_icon.jpg" },
+        { "revival.visuals", IDR_REVIVAL_VISUALS, "visuals_icon.jpg" },
+        { "revival.misc", IDR_REVIVAL_MISC, "misc_icon.jpg" },
+        { "revival.scripts", IDR_REVIVAL_SCRIPTS, "scripts_icon.jpg" },
+        { "revival.themes", IDR_REVIVAL_THEMES, "themes_icon.jpg" },
+        { "revival.configs", IDR_REVIVAL_CONFIGS, "configs_icon.jpg" },
     }};
+
+    std::filesystem::path executableDirectory() {
+        std::array<wchar_t, 32768> buffer{};
+        const DWORD length = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
+        if (length == 0 || length >= buffer.size())
+            return {};
+        return std::filesystem::path(buffer.data(), buffer.data() + length).parent_path();
+    }
+
+    std::filesystem::path findAssetFrom(std::filesystem::path base, const char* fileName) {
+        std::error_code ec;
+        for (int depth = 0; depth < 10 && !base.empty(); ++depth) {
+            const auto candidate = base / "assets" / "icons" / fileName;
+            if (std::filesystem::exists(candidate, ec) && !ec)
+                return candidate;
+
+            ec.clear();
+            const auto parent = base.parent_path();
+            if (parent == base)
+                break;
+            base = parent;
+        }
+        return {};
+    }
+
+    std::filesystem::path resolveBundledAsset(const char* fileName) {
+        std::error_code ec;
+        const auto cwd = std::filesystem::current_path(ec);
+        if (!ec) {
+            if (const auto path = findAssetFrom(cwd, fileName); !path.empty())
+                return path;
+        }
+
+        if (const auto path = findAssetFrom(executableDirectory(), fileName); !path.empty())
+            return path;
+
+        const std::filesystem::path sourceFile = __FILE__;
+        if (sourceFile.is_absolute()) {
+            if (const auto path = findAssetFrom(sourceFile.parent_path(), fileName); !path.empty())
+                return path;
+        }
+
+        return {};
+    }
 
     bool loadEmbeddedAsset(const char* id, int resourceId) {
         HMODULE module = GetModuleHandleW(nullptr);
@@ -70,11 +115,23 @@ namespace {
         return ImageLoader::i().loadFromMemory(id, data, static_cast<std::size_t>(size), true, false);
     }
 
-    void loadEmbeddedAssets() {
-        for (const auto& asset : kEmbeddedAssets) {
-            if (!loadEmbeddedAsset(asset.id, asset.resourceId))
-                Console::i().logError(std::string("Failed to load embedded UI asset: ") + asset.id);
+    bool loadAssetWithFallback(const EmbeddedAsset& asset) {
+        if (loadEmbeddedAsset(asset.id, asset.resourceId))
+            return true;
+
+        const auto diskPath = resolveBundledAsset(asset.fileName);
+        if (!diskPath.empty() && ImageLoader::i().loadFromFile(asset.id, diskPath, true, false)) {
+            Console::i().logInfo(std::string("Loaded UI asset from disk fallback: ") + diskPath.string());
+            return true;
         }
+
+        Console::i().logError(std::string("Failed to load UI asset: ") + asset.id + " / " + asset.fileName);
+        return false;
+    }
+
+    void loadEmbeddedAssets() {
+        for (const auto& asset : kEmbeddedAssets)
+            loadAssetWithFallback(asset);
     }
 
     void drawPanelFrame(const ImVec2& min, const ImVec2& max, bool selected = false) {
@@ -264,7 +321,7 @@ void Menu::renderLogo() {
         ImGui::PushFont(bigFont);
         ImGui::TextUnformatted("REVIVAL V2");
         ImGui::PopFont();
-        ImGui::TextDisabled("Embedded banner failed to load");
+        ImGui::TextDisabled("Header artwork failed to load");
     }
 
     draw->AddRect(min, max, IM_COL32(110, 52, 160, 175), 10.0f, 0, 1.4f);
