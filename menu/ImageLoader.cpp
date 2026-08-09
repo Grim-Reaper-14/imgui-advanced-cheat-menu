@@ -1,11 +1,64 @@
 #include "ImageLoader.hpp"
 
+#include "../resources/RevivalHeaderData.hpp"
+
 #include <SFML/Graphics/Image.hpp>
 
 #include <algorithm>
+#include <cstdint>
 #include <string>
+#include <vector>
 
 namespace {
+    constexpr const char* kRevivalHeaderId = "revival.header";
+
+    int base64Value(char value) {
+        if (value >= 'A' && value <= 'Z')
+            return value - 'A';
+        if (value >= 'a' && value <= 'z')
+            return value - 'a' + 26;
+        if (value >= '0' && value <= '9')
+            return value - '0' + 52;
+        if (value == '+')
+            return 62;
+        if (value == '/')
+            return 63;
+        return -1;
+    }
+
+    std::vector<unsigned char> decodeRevivalHeader() {
+        std::vector<unsigned char> decoded;
+        decoded.reserve(64000);
+
+        std::uint32_t accumulator = 0;
+        int bits = -8;
+
+        for (const char* part : RevivalHeaderData::Parts) {
+            for (const char* cursor = part; *cursor != '\0'; ++cursor) {
+                if (*cursor == '=')
+                    return decoded;
+
+                const int value = base64Value(*cursor);
+                if (value < 0)
+                    continue;
+
+                accumulator = (accumulator << 6) | static_cast<std::uint32_t>(value);
+                bits += 6;
+                if (bits >= 0) {
+                    decoded.push_back(static_cast<unsigned char>((accumulator >> bits) & 0xffu));
+                    bits -= 8;
+                }
+            }
+        }
+
+        return decoded;
+    }
+
+    const std::vector<unsigned char>& revivalHeaderBytes() {
+        static const std::vector<unsigned char> bytes = decodeRevivalHeader();
+        return bytes;
+    }
+
     bool shouldPurpleTint(const std::string& id) {
         return id == "revival.scripts" || id == "revival.themes";
     }
@@ -56,6 +109,24 @@ namespace {
 
         texture.loadFromImage(image);
     }
+
+    bool loadTextureFromMemory(
+        std::unique_ptr<sf::Texture>& texture,
+        const void* data,
+        std::size_t size,
+        bool smooth,
+        bool repeated) {
+        if (data == nullptr || size == 0)
+            return false;
+
+        texture = std::make_unique<sf::Texture>();
+        if (!texture->loadFromMemory(data, size))
+            return false;
+
+        texture->setSmooth(smooth);
+        texture->setRepeated(repeated);
+        return true;
+    }
 }
 
 bool ImageLoader::loadFromFile(
@@ -63,18 +134,27 @@ bool ImageLoader::loadFromFile(
     const std::filesystem::path& path,
     bool smooth,
     bool repeated) {
-    if (id.empty() || path.empty())
+    if (id.empty())
         return false;
 
     auto texture = std::make_unique<sf::Texture>();
-    if (!texture->loadFromFile(path.string()))
-        return false;
 
-    if (shouldPurpleTint(id))
-        applyPurpleTint(*texture);
+    if (id == kRevivalHeaderId) {
+        const auto& bytes = revivalHeaderBytes();
+        if (!loadTextureFromMemory(texture, bytes.data(), bytes.size(), smooth, repeated))
+            return false;
+    }
+    else {
+        if (path.empty() || !texture->loadFromFile(path.string()))
+            return false;
 
-    texture->setSmooth(smooth);
-    texture->setRepeated(repeated);
+        if (shouldPurpleTint(id))
+            applyPurpleTint(*texture);
+
+        texture->setSmooth(smooth);
+        texture->setRepeated(repeated);
+    }
+
     textures_[id] = std::move(texture);
     return true;
 }
@@ -85,18 +165,24 @@ bool ImageLoader::loadFromMemory(
     std::size_t size,
     bool smooth,
     bool repeated) {
-    if (id.empty() || data == nullptr || size == 0)
+    if (id.empty())
         return false;
 
     auto texture = std::make_unique<sf::Texture>();
-    if (!texture->loadFromMemory(data, size))
-        return false;
 
-    if (shouldPurpleTint(id))
-        applyPurpleTint(*texture);
+    if (id == kRevivalHeaderId) {
+        const auto& bytes = revivalHeaderBytes();
+        if (!loadTextureFromMemory(texture, bytes.data(), bytes.size(), smooth, repeated))
+            return false;
+    }
+    else {
+        if (!loadTextureFromMemory(texture, data, size, smooth, repeated))
+            return false;
 
-    texture->setSmooth(smooth);
-    texture->setRepeated(repeated);
+        if (shouldPurpleTint(id))
+            applyPurpleTint(*texture);
+    }
+
     textures_[id] = std::move(texture);
     return true;
 }

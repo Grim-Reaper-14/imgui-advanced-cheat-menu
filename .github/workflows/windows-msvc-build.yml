@@ -55,27 +55,82 @@ jobs:
           git commit -m 'Vendor Sol2 v3.3.1 and Lua 5.4.8'
           git push origin HEAD:revival-v2-cleanup
 
-      - name: Validate Revival header artwork
+      - name: Restore and validate Revival header artwork
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $headerPath = 'assets/icons/revival_header.jpg'
+          $parts = @(
+            'resources/RevivalHeaderPart00.inc',
+            'resources/RevivalHeaderPart01.inc',
+            'resources/RevivalHeaderPart02.inc',
+            'resources/RevivalHeaderRest00.inc',
+            'resources/RevivalHeaderRest01.inc',
+            'resources/RevivalHeaderRest02.inc',
+            'resources/RevivalHeaderRest03.inc',
+            'resources/RevivalHeaderRest04a.inc',
+            'resources/RevivalHeaderRest04b.inc',
+            'resources/RevivalHeaderRest05a.inc',
+            'resources/RevivalHeaderRest05b.inc',
+            'resources/RevivalHeaderRest06.inc',
+            'resources/RevivalHeaderRest07.inc',
+            'resources/RevivalHeaderRest08.inc',
+            'resources/RevivalHeaderRest09a.inc',
+            'resources/RevivalHeaderRest09b.inc',
+            'resources/RevivalHeaderRest10a.inc',
+            'resources/RevivalHeaderRest10b.inc',
+            'resources/RevivalHeaderRest11a.inc',
+            'resources/RevivalHeaderRest11b.inc'
+          )
 
-          if (-not (Test-Path $headerPath)) {
-            throw "Missing $headerPath"
+          $prefix = 'R"REVIVAL('
+          $suffix = ')REVIVAL",'
+          $encoded = ''
+
+          foreach ($part in $parts) {
+            if (-not (Test-Path $part)) {
+              throw "Missing embedded header chunk: $part"
+            }
+
+            $text = (Get-Content -Raw $part).Trim()
+            if (-not $text.StartsWith($prefix) -or -not $text.EndsWith($suffix)) {
+              throw "Malformed embedded header chunk: $part"
+            }
+
+            $payloadLength = $text.Length - $prefix.Length - $suffix.Length
+            $encoded += $text.Substring($prefix.Length, $payloadLength)
+          }
+
+          $bytes = [Convert]::FromBase64String($encoded)
+          $headerPath = 'assets/icons/revival_header.jpg'
+          [IO.File]::WriteAllBytes($headerPath, $bytes)
+
+          $expectedSha256 = 'bf46af083e5b3132e5c75d58f1a97537efd3617132a0e816e0003768137b0a9d'
+          $actualSha256 = (Get-FileHash $headerPath -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actualSha256 -ne $expectedSha256) {
+            throw "Reconstructed Revival header hash mismatch. Expected $expectedSha256 but got $actualSha256"
           }
 
           Add-Type -AssemblyName System.Drawing
           $image = [System.Drawing.Image]::FromFile((Resolve-Path $headerPath))
           try {
-            if ($image.Width -ne 640 -or $image.Height -ne 213) {
+            if ($image.Width -ne 1200 -or $image.Height -ne 400) {
               throw "Wrong Revival header dimensions: $($image.Width)x$($image.Height)"
             }
-            $actualSha256 = (Get-FileHash $headerPath -Algorithm SHA256).Hash.ToLowerInvariant()
-            Write-Host "Decoded Revival header JPEG: $($image.Width)x$($image.Height), SHA256 $actualSha256"
+            Write-Host "Verified Revival header: $($image.Width)x$($image.Height), SHA256 $actualSha256"
           }
           finally {
             $image.Dispose()
+          }
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- $headerPath
+          git diff --cached --quiet -- $headerPath
+          if ($LASTEXITCODE -ne 0) {
+            git commit -m 'Repair Revival header artwork from verified source'
+            git push origin HEAD:revival-v2-cleanup
+          } else {
+            Write-Host 'Physical header file already matches verified embedded source.'
           }
 
       - name: Setup MSBuild

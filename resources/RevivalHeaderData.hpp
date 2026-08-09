@@ -1,14 +1,28 @@
 #pragma once
 
-#include <cstddef>
+#include <array>
 
 namespace RevivalHeaderData {
-inline constexpr const char* Parts[] = {
-#include "RevivalHeaderPart0.inc"
-#include "RevivalHeaderPart1.inc"
-#include "RevivalHeaderPart2.inc"
-#include "RevivalHeaderPart3.inc"
-};
-
-inline constexpr std::size_t PartCount = sizeof(Parts) / sizeof(Parts[0]);
+    inline constexpr std::array<const char*, 20> Parts = {{
+#include "RevivalHeaderPart00.inc"
+#include "RevivalHeaderPart01.inc"
+#include "RevivalHeaderPart02.inc"
+#include "RevivalHeaderRest00.inc"
+#include "RevivalHeaderRest01.inc"
+#include "RevivalHeaderRest02.inc"
+#include "RevivalHeaderRest03.inc"
+#include "RevivalHeaderRest04a.inc"
+#include "RevivalHeaderRest04b.inc"
+#include "RevivalHeaderRest05a.inc"
+#include "RevivalHeaderRest05b.inc"
+#include "RevivalHeaderRest06.inc"
+#include "RevivalHeaderRest07.inc"
+#include "RevivalHeaderRest08.inc"
+#include "RevivalHeaderRest09a.inc"
+#include "RevivalHeaderRest09b.inc"
+#include "RevivalHeaderRest10a.inc"
+#include "RevivalHeaderRest10b.inc"
+#include "RevivalHeaderRest11a.inc"
+#include "RevivalHeaderRest11b.inc"
+    }};
 }
