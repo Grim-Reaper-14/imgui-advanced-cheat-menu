@@ -122,3 +122,5 @@ jobs:
         if: steps.build.outputs.state != 'success'
         shell: pwsh
         run: exit 1
+
+# Revival V2 scripting dependency validation
