@@ -17,6 +17,11 @@
 #if defined(MENU_ENABLE_LUA) && MENU_ENABLE_LUA
 #define MENU_HAS_LUA 1
 #include <sol/sol.hpp>
+extern "C" {
+#define MAKE_LIB
+#include "../dependencies/lua/onelua.c"
+#undef MAKE_LIB
+}
 #else
 #define MENU_HAS_LUA 0
 #endif
@@ -78,21 +83,11 @@ struct LuaManager::Impl {
 
     void bindApi() {
         auto ui = lua.create_named_table("ui");
-        ui.set_function("text", [](const std::string& text) {
-            ImGui::TextUnformatted(text.c_str());
-        });
-        ui.set_function("separator", []() {
-            ImGui::Separator();
-        });
-        ui.set_function("spacing", []() {
-            ImGui::Spacing();
-        });
-        ui.set_function("same_line", []() {
-            ImGui::SameLine();
-        });
-        ui.set_function("button", [](const std::string& label) {
-            return ImGui::Button(label.c_str());
-        });
+        ui.set_function("text", [](const std::string& text) { ImGui::TextUnformatted(text.c_str()); });
+        ui.set_function("separator", []() { ImGui::Separator(); });
+        ui.set_function("spacing", []() { ImGui::Spacing(); });
+        ui.set_function("same_line", []() { ImGui::SameLine(); });
+        ui.set_function("button", [](const std::string& label) { return ImGui::Button(label.c_str()); });
         ui.set_function("checkbox", [](const std::string& label, bool value) {
             ImGui::Checkbox(label.c_str(), &value);
             return value;
@@ -107,20 +102,12 @@ struct LuaManager::Impl {
         });
 
         auto menu = lua.create_named_table("menu");
-        menu.set_function("log", [](const std::string& text) {
-            Console::i().log(text);
-        });
-        menu.set_function("log_info", [](const std::string& text) {
-            Console::i().logInfo(text);
-        });
-        menu.set_function("log_error", [](const std::string& text) {
-            Console::i().logError(text);
-        });
+        menu.set_function("log", [](const std::string& text) { Console::i().log(text); });
+        menu.set_function("log_info", [](const std::string& text) { Console::i().logInfo(text); });
+        menu.set_function("log_error", [](const std::string& text) { Console::i().logError(text); });
 
         auto modules = lua.create_named_table("modules");
-        modules.set_function("exists", [](const std::string& name) {
-            return ModuleManager::i().getModuleByName(name) != nullptr;
-        });
+        modules.set_function("exists", [](const std::string& name) { return ModuleManager::i().getModuleByName(name) != nullptr; });
         modules.set_function("is_enabled", [](const std::string& name) {
             Module* module = ModuleManager::i().getModuleByName(name);
             return module ? module->isToggled() : false;
@@ -129,7 +116,6 @@ struct LuaManager::Impl {
             Module* module = ModuleManager::i().getModuleByName(name);
             if (!module)
                 return false;
-
             if (module->isToggled() != enabled)
                 module->toggle();
             return true;
@@ -150,11 +136,9 @@ struct LuaManager::Impl {
     bool callNoArgs(ScriptEntry& script, const char* callback) {
         if (!script.loaded || !script.environment)
             return false;
-
         sol::object object = (*script.environment)[callback];
         if (!object.valid() || object.get_type() != sol::type::function)
             return true;
-
         sol::protected_function function = object.as<sol::protected_function>();
         sol::protected_function_result result = function();
         if (!result.valid()) {
@@ -163,18 +147,15 @@ struct LuaManager::Impl {
             logLuaError(script, script.lastError);
             return false;
         }
-
         return true;
     }
 
     bool callUpdate(ScriptEntry& script, float deltaSeconds) {
         if (!script.loaded || !script.environment)
             return false;
-
         sol::object object = (*script.environment)["on_update"];
         if (!object.valid() || object.get_type() != sol::type::function)
             return true;
-
         sol::protected_function function = object.as<sol::protected_function>();
         sol::protected_function_result result = function(deltaSeconds);
         if (!result.valid()) {
@@ -183,14 +164,12 @@ struct LuaManager::Impl {
             logLuaError(script, script.lastError);
             return false;
         }
-
         return true;
     }
 
     void unloadScript(ScriptEntry& script) {
         if (script.loaded)
             callNoArgs(script, "on_unload");
-
         script.environment.reset();
         script.loaded = false;
     }
@@ -198,7 +177,6 @@ struct LuaManager::Impl {
     bool loadScript(ScriptEntry& script) {
         unloadScript(script);
         script.lastError.clear();
-
         sol::load_result loadedChunk = lua.load_file(script.path.string());
         if (!loadedChunk.valid()) {
             sol::error error = loadedChunk;
@@ -206,11 +184,9 @@ struct LuaManager::Impl {
             logLuaError(script, script.lastError);
             return false;
         }
-
         auto environment = std::make_unique<sol::environment>(lua, sol::create, lua.globals());
         sol::protected_function function = loadedChunk;
         sol::set_environment(*environment, function);
-
         sol::protected_function_result result = function();
         if (!result.valid()) {
             sol::error error = result;
@@ -218,7 +194,6 @@ struct LuaManager::Impl {
             logLuaError(script, script.lastError);
             return false;
         }
-
         script.environment = std::move(environment);
         script.loaded = true;
         callNoArgs(script, "on_load");
@@ -229,116 +204,83 @@ struct LuaManager::Impl {
     void scanScripts() {
         std::error_code error;
         std::filesystem::create_directories(scriptsPath, error);
-
         std::unordered_set<std::string> onDisk;
         for (const auto& entry : std::filesystem::directory_iterator(scriptsPath, error)) {
             if (error)
                 break;
-            if (!entry.is_regular_file())
+            if (!entry.is_regular_file() || entry.path().extension() != ".lua")
                 continue;
-            if (entry.path().extension() != ".lua")
-                continue;
-
             const std::string name = entry.path().filename().string();
             onDisk.insert(name);
-
             if (findScript(name))
                 continue;
-
             ScriptEntry script;
             script.path = entry.path();
             script.name = name;
             script.autoRun = autoRunNames.find(name) != autoRunNames.end();
             scripts.push_back(std::move(script));
         }
-
         for (auto it = scripts.begin(); it != scripts.end();) {
             if (onDisk.find(it->name) == onDisk.end()) {
                 unloadScript(*it);
                 it = scripts.erase(it);
-            }
-            else {
+            } else {
                 ++it;
             }
         }
-
-        std::sort(scripts.begin(), scripts.end(), [](const ScriptEntry& a, const ScriptEntry& b) {
-            return a.name < b.name;
-        });
-
+        std::sort(scripts.begin(), scripts.end(), [](const ScriptEntry& a, const ScriptEntry& b) { return a.name < b.name; });
         if (selectedScript >= static_cast<int>(scripts.size()))
             selectedScript = scripts.empty() ? -1 : 0;
     }
 #endif
 };
 
-LuaManager::LuaManager()
-    : impl(std::make_unique<Impl>()) {
-}
-
+LuaManager::LuaManager() : impl(std::make_unique<Impl>()) {}
 LuaManager::~LuaManager() = default;
 
-bool LuaManager::isAvailable() const {
-    return impl && impl->available;
-}
+bool LuaManager::isAvailable() const { return impl && impl->available; }
 
 void LuaManager::initialize() {
     if (!impl || impl->initialized)
         return;
-
     impl->scriptsPath = std::filesystem::current_path() / "scripts";
     std::error_code error;
     std::filesystem::create_directories(impl->scriptsPath, error);
-
 #if MENU_HAS_LUA
-    impl->lua.open_libraries(
-        sol::lib::base,
-        sol::lib::math,
-        sol::lib::string,
-        sol::lib::table,
-        sol::lib::coroutine,
-        sol::lib::utf8);
-
-    // Deliberately do not open os/io/package/debug by default. Scripts get menu/UI/module APIs.
+    impl->lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::string, sol::lib::table, sol::lib::coroutine, sol::lib::utf8);
     impl->lua["dofile"] = sol::nil;
     impl->lua["loadfile"] = sol::nil;
     impl->lua["require"] = sol::nil;
     impl->bindApi();
     impl->loadAutoRunList();
     impl->scanScripts();
-
     for (auto& script : impl->scripts) {
         if (script.autoRun)
             impl->loadScript(script);
     }
-
-    impl->status = "Lua scripting ready";
+    impl->status = "Lua 5.4 + Sol2 scripting ready";
     Console::i().logInfo(impl->status);
 #else
-    impl->status = "Lua support is disabled: add Sol2 + Lua 5.4, define MENU_ENABLE_LUA=1, then rebuild.";
+    impl->status = "Lua support is disabled.";
     Console::i().logInfo(impl->status);
 #endif
-
     impl->initialized = true;
 }
 
 void LuaManager::shutdown() {
     if (!impl || !impl->initialized)
         return;
-
 #if MENU_HAS_LUA
     for (auto& script : impl->scripts)
         impl->unloadScript(script);
     impl->scripts.clear();
 #endif
-
     impl->initialized = false;
 }
 
 void LuaManager::update(float deltaSeconds) {
     if (!impl || !impl->initialized)
         return;
-
 #if MENU_HAS_LUA
     for (auto& script : impl->scripts) {
         if (script.loaded)
@@ -352,20 +294,15 @@ void LuaManager::update(float deltaSeconds) {
 void LuaManager::renderMenu() {
     if (!impl)
         return;
-
     if (!impl->initialized)
         initialize();
-
     ImGui::TextUnformatted("Lua scripting");
     ImGui::SameLine();
-    ImGui::TextDisabled(isAvailable() ? "ready" : "dependency missing");
-
+    ImGui::TextDisabled(isAvailable() ? "Sol2 ready" : "disabled");
     ImGui::Spacing();
-
 #if MENU_HAS_LUA
     if (ImGui::Button("Refresh scripts"))
         impl->scanScripts();
-
     ImGui::SameLine();
     if (ImGui::Button("Reload all")) {
         for (auto& script : impl->scripts) {
@@ -373,17 +310,14 @@ void LuaManager::renderMenu() {
                 impl->loadScript(script);
         }
     }
-
     ImGui::SameLine();
     if (ImGui::Button("Open scripts folder")) {
         const std::string folder = impl->scriptsPath.string();
         ShellExecuteA(nullptr, "open", folder.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     }
-
     ImGui::Spacing();
     ImGui::Separator();
     ImGui::Spacing();
-
     ImGui::BeginChild("##script-list", ImVec2(190.0f, 0.0f), true);
     for (int i = 0; i < static_cast<int>(impl->scripts.size()); ++i) {
         auto& script = impl->scripts[i];
@@ -392,41 +326,33 @@ void LuaManager::renderMenu() {
             impl->selectedScript = i;
     }
     ImGui::EndChild();
-
     ImGui::SameLine();
     ImGui::BeginChild("##script-details", ImVec2(0.0f, 0.0f), true);
-
     if (impl->selectedScript >= 0 && impl->selectedScript < static_cast<int>(impl->scripts.size())) {
         auto& script = impl->scripts[impl->selectedScript];
-
         ImGui::TextUnformatted(script.name.c_str());
         ImGui::TextDisabled("%s", script.path.string().c_str());
         ImGui::Spacing();
-
         bool autoRun = script.autoRun;
         if (ImGui::Checkbox("Auto-run on startup", &autoRun)) {
             script.autoRun = autoRun;
             impl->saveAutoRunList();
         }
-
         if (!script.loaded) {
             if (ImGui::Button("Load"))
                 impl->loadScript(script);
-        }
-        else {
+        } else {
             if (ImGui::Button("Reload"))
                 impl->loadScript(script);
             ImGui::SameLine();
             if (ImGui::Button("Unload"))
                 impl->unloadScript(script);
         }
-
         if (!script.lastError.empty()) {
             ImGui::Spacing();
             ImGui::TextColored(ImVec4(1.0f, 0.35f, 0.35f, 1.0f), "Last error:");
             ImGui::TextWrapped("%s", script.lastError.c_str());
         }
-
         if (script.loaded) {
             ImGui::Spacing();
             ImGui::Separator();
@@ -434,17 +360,11 @@ void LuaManager::renderMenu() {
             ImGui::TextDisabled("Script UI");
             impl->callNoArgs(script, "on_render");
         }
-    }
-    else {
+    } else {
         ImGui::TextDisabled("Select a .lua script from the list.");
     }
-
     ImGui::EndChild();
 #else
     ImGui::TextWrapped("%s", impl->status.c_str());
-    ImGui::Spacing();
-    ImGui::BulletText("Add Sol2 and Lua 5.4 include paths.");
-    ImGui::BulletText("Link the Lua 5.4 library.");
-    ImGui::BulletText("Define MENU_ENABLE_LUA=1 for the configuration you want to enable scripting in.");
 #endif
 }
