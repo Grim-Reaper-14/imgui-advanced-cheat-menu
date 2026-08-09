@@ -424,14 +424,17 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\lgc.c(
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ltable.c(373,5): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ldo.c(114,1): warning C4297: 'luaD_throw': function assumed not to throw an exception but does [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\lua\ldo.c(114,1): message : The function is extern "C" and /EHc was specified [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(458,15): error C2143: syntax error: missing ')' before '*' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(479): message : see reference to class template instantiation 'sol::container_detail::usertype_container_default<X,<unnamed-symbol>>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(458,15): error C2143: syntax error: missing ';' before '*' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(458,1): error C2334: unexpected token(s) preceding ':'; skipping apparent function body [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(479,3): error C2143: syntax error: missing ')' before ';' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(479,3): error C2059: syntax error: ')' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(479,3): error C2238: unexpected token(s) preceding ';' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
-D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\sol2\include\sol\usertype_container.hpp(479,3): fatal error C1201: unable to continue after syntax error in class template definition [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.29.30133\include\algorithm(2650,24): warning C4244: 'argument': conversion from 'unsigned __int64' to 'char', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): message : see reference to function template instantiation '_OutIt std::transform<std::_Array_iterator<_Ty,11>,std::back_insert_iterator<std::string>,Obf::Xor_String<11>::()::<lambda_cb9441edf80a7da409242e43140e2eb4>>(const _InIt,const _InIt,_OutIt,_Fn)' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::string>,
+              _Ty=char,
+              _InIt=std::_Array_iterator<char,11>,
+              _Fn=Obf::Xor_String<11>::()::<lambda_cb9441edf80a7da409242e43140e2eb4>
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<11>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\Module.hpp(42): message : see reference to class template instantiation 'Obf::Xor_String<11>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   ColorH.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   FileH.cpp
@@ -458,3 +461,8 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.cpp(89,14): war
   StringH.cpp
 D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
   TimeH.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 6961 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ImGui Advanced Cheat Menu.vcxproj -> D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\x64\Release\ImGui Advanced Cheat Menu.exe
