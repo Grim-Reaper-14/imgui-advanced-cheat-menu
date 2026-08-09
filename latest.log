@@ -456,6 +456,6 @@ D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31
   TimeH.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 4515 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 4516 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   ImGui Advanced Cheat Menu.vcxproj -> D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\x64\Release\ImGui Advanced Cheat Menu.exe
