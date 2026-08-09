@@ -7,8 +7,13 @@
 #pragma once
 #include "Fonts.hpp"
 
-#include <vector>
+#include <chrono>
+#include <cstdarg>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
 #include <string>
+#include <vector>
 
 #define NOTIFY_MAX_MSG_LENGTH			4096		// Max message content length
 #define NOTIFY_PADDING_X				20.f		// Bottom-left X padding
@@ -28,6 +33,12 @@
 typedef int ImGuiToastType;
 typedef int ImGuiToastPhase;
 typedef int ImGuiToastPos;
+
+NOTIFY_INLINE uint64_t notify_now_ms()
+{
+	using namespace std::chrono;
+	return static_cast<uint64_t>(duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count());
+}
 
 enum ImGuiToastType_
 {
@@ -149,7 +160,7 @@ public:
 
 	NOTIFY_INLINE auto get_content() -> char* { return this->content; };
 
-	NOTIFY_INLINE auto get_elapsed_time() { return GetTickCount64() - this->creation_time; }
+	NOTIFY_INLINE auto get_elapsed_time() { return notify_now_ms() - this->creation_time; }
 
 	NOTIFY_INLINE auto get_phase() -> const ImGuiToastPhase&
 	{
@@ -199,7 +210,7 @@ public:
 
 		this->type = type;
 		this->dismiss_time = dismiss_time;
-		this->creation_time = GetTickCount64();
+		this->creation_time = notify_now_ms();
 
 		memset(this->title, 0, sizeof(this->title));
 		memset(this->content, 0, sizeof(this->content));
@@ -217,7 +228,7 @@ namespace ImGui
 	/// <summary>
 	/// Insert a new toast in the list
 	/// </summary>
-	NOTIFY_INLINE VOID InsertNotification(const ImGuiToast& toast)
+	NOTIFY_INLINE void InsertNotification(const ImGuiToast& toast)
 	{
 		notifications.push_back(toast);
 	}
@@ -226,7 +237,7 @@ namespace ImGui
 	/// Remove a toast from the list by its index
 	/// </summary>
 	/// <param name="index">index of the toast to remove</param>
-	NOTIFY_INLINE VOID RemoveNotification(int index)
+	NOTIFY_INLINE void RemoveNotification(int index)
 	{
 		notifications.erase(notifications.begin() + index);
 	}
@@ -234,7 +245,7 @@ namespace ImGui
 	/// <summary>
 	/// Render toasts, call at the end of your rendering!
 	/// </summary>
-	NOTIFY_INLINE VOID RenderNotifications()
+	NOTIFY_INLINE void RenderNotifications()
 	{
 		const auto vp_size = GetMainViewport()->Size;
 

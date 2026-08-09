@@ -1,9 +1,9 @@
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui_custom.hpp"
 
 #include "../util/ColorH.hpp"
 #include "../util/StringH.hpp"
 
-#define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui_internal.h"
 
 #include <Windows.h>

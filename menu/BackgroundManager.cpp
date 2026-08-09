@@ -41,7 +41,7 @@ namespace {
         const auto nativeHandle = texture.getNativeHandle();
         static_assert(sizeof(nativeHandle) <= sizeof(ImTextureID), "ImTextureID cannot hold an SFML texture handle");
 
-        ImTextureID id = nullptr;
+        ImTextureID id{};
         std::memcpy(&id, &nativeHandle, sizeof(nativeHandle));
         return id;
     }
