@@ -18,59 +18,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 1
 
-      - name: Vendor pinned UI dependencies
-        if: hashFiles('.gitmodules') != ''
+      - name: Vendor scripting dependencies
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $temp = Join-Path $env:RUNNER_TEMP 'vendored-ui'
-          New-Item -ItemType Directory -Force (Join-Path $temp 'imgui') | Out-Null
-          New-Item -ItemType Directory -Force (Join-Path $temp 'imgui-sfml-src') | Out-Null
+          $needsSol2 = -not (Test-Path 'dependencies/sol2/include/sol/sol.hpp')
+          $needsLua = -not (Test-Path 'dependencies/lua/lua.h')
 
-          $imguiFiles = @(
-            'imconfig.h',
-            'imgui.h',
-            'imgui_internal.h',
-            'imgui.cpp',
-            'imgui_demo.cpp',
-            'imgui_draw.cpp',
-            'imgui_tables.cpp',
-            'imgui_widgets.cpp',
-            'imstb_rectpack.h',
-            'imstb_textedit.h',
-            'imstb_truetype.h'
-          )
-
-          $sfmlFiles = @(
-            'imconfig-SFML.h',
-            'imgui-SFML.h',
-            'imgui-SFML_export.h',
-            'imgui-SFML.cpp'
-          )
-
-          foreach ($file in $imguiFiles) {
-            Copy-Item (Join-Path 'dependencies/imgui' $file) (Join-Path $temp 'imgui' $file) -Force
-          }
-          foreach ($file in $sfmlFiles) {
-            Copy-Item (Join-Path 'dependencies/imgui-sfml-src' $file) (Join-Path $temp 'imgui-sfml-src' $file) -Force
+          if (-not $needsSol2 -and -not $needsLua) {
+            Write-Host 'Sol2 and Lua are already vendored.'
+            exit 0
           }
 
-          git rm -f --cached -- dependencies/imgui dependencies/imgui-sfml-src
-          Remove-Item -Recurse -Force dependencies/imgui, dependencies/imgui-sfml-src
-          git rm -f -- .gitmodules
+          $temp = Join-Path $env:RUNNER_TEMP 'revival-script-deps'
+          New-Item -ItemType Directory -Force $temp | Out-Null
 
-          New-Item -ItemType Directory -Force dependencies/imgui | Out-Null
-          New-Item -ItemType Directory -Force dependencies/imgui-sfml-src | Out-Null
-          Copy-Item (Join-Path $temp 'imgui/*') dependencies/imgui/ -Force
-          Copy-Item (Join-Path $temp 'imgui-sfml-src/*') dependencies/imgui-sfml-src/ -Force
+          if ($needsSol2) {
+            git clone --depth 1 --branch v3.3.1 https://github.com/ThePhD/sol2.git (Join-Path $temp 'sol2')
+            New-Item -ItemType Directory -Force 'dependencies/sol2/include' | Out-Null
+            Copy-Item (Join-Path $temp 'sol2/include/sol') 'dependencies/sol2/include/' -Recurse -Force
+          }
 
-          git add -- dependencies/imgui dependencies/imgui-sfml-src
+          if ($needsLua) {
+            git clone --depth 1 --branch v5.4.8 https://github.com/lua/lua.git (Join-Path $temp 'lua')
+            New-Item -ItemType Directory -Force 'dependencies/lua' | Out-Null
+            Copy-Item (Join-Path $temp 'lua/*.h') 'dependencies/lua/' -Force
+            Copy-Item (Join-Path $temp 'lua/*.c') 'dependencies/lua/' -Force
+          }
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Vendor Dear ImGui and ImGui-SFML sources'
+          if ($needsSol2) { git add -- dependencies/sol2 }
+          if ($needsLua) { git add -- dependencies/lua }
+          git commit -m 'Vendor Sol2 v3.3.1 and Lua 5.4.8'
           git push origin HEAD:revival-v2-cleanup
 
       - name: Setup MSBuild
