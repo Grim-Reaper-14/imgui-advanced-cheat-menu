@@ -1,3 +1,7 @@
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include "LuaManager.hpp"
 
 #include "../ModuleManager.hpp"
@@ -16,12 +20,12 @@
 
 #if defined(MENU_ENABLE_LUA) && MENU_ENABLE_LUA
 #define MENU_HAS_LUA 1
-#include <sol/sol.hpp>
 extern "C" {
 #define MAKE_LIB
 #include "../dependencies/lua/onelua.c"
 #undef MAKE_LIB
 }
+#include <sol/sol.hpp>
 #else
 #define MENU_HAS_LUA 0
 #endif
@@ -47,9 +51,7 @@ struct LuaManager::Impl {
     std::unordered_set<std::string> autoRunNames;
     int selectedScript = -1;
 
-    std::filesystem::path autoRunFile() const {
-        return scriptsPath / "autoload.txt";
-    }
+    std::filesystem::path autoRunFile() const { return scriptsPath / "autoload.txt"; }
 
     void logLuaError(const ScriptEntry& script, const std::string& error) {
         Console::i().logError("Lua [" + script.name + "]: " + error);
@@ -57,7 +59,6 @@ struct LuaManager::Impl {
 
     void loadAutoRunList() {
         autoRunNames.clear();
-
         std::ifstream input(autoRunFile());
         std::string line;
         while (std::getline(input, line)) {
