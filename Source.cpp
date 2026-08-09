@@ -16,8 +16,8 @@
 #include <Windows.h>
 
 namespace {
-    constexpr unsigned int kWindowWidth = 1080;
-    constexpr unsigned int kWindowHeight = 800;
+    constexpr unsigned int kWindowWidth = 1180;
+    constexpr unsigned int kWindowHeight = 860;
 
     void setWindowVisible(sf::RenderWindow& window, bool visible) {
         HWND hwnd = reinterpret_cast<HWND>(window.getSystemHandle());
@@ -103,7 +103,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         Console::i().render();
         renderNotifications();
 
-        window.clear(sf::Color(15, 16, 24, 255));
+        window.clear(sf::Color(5, 7, 13, 255));
         ImGui::SFML::Render(window);
         window.display();
     }
@@ -112,5 +112,3 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     ImGui::SFML::Shutdown();
     return 0;
 }
-
-// Validate generated Revival V2 artwork integration.
