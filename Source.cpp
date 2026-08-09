@@ -16,6 +16,9 @@
 #include <Windows.h>
 
 namespace {
+    constexpr unsigned int kWindowWidth = 980;
+    constexpr unsigned int kWindowHeight = 680;
+
     void handleHotkeys() {
         if (GetAsyncKeyState(VK_INSERT) & 1)
             Menu::isGUIVisible = !Menu::isGUIVisible;
@@ -49,16 +52,16 @@ namespace {
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     sf::RenderWindow window(
-        sf::VideoMode(1280, 800),
-        obf("ImGui Menu Revival"),
-        sf::Style::Default);
+        sf::VideoMode(kWindowWidth, kWindowHeight),
+        obf("Revival V2"),
+        sf::Style::Titlebar | sf::Style::Close);
 
     window.setFramerateLimit(144);
     ImGui::SFML::Init(window);
 
     Menu::loadTheme();
     LuaManager::i().initialize();
-    Console::i().logInfo(obf("Revival UI initialized"));
+    Console::i().logInfo(obf("Revival V2 standalone UI initialized"));
 
     sf::Clock deltaClock;
     while (window.isOpen()) {
