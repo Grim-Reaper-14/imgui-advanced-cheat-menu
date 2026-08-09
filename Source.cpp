@@ -154,4 +154,4 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     return 0;
 }
 
-// Validate the corrected Revival V2 header asset on Windows CI.
+// Validate the embedded Revival V2 header payload on Windows CI.
