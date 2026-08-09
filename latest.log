@@ -1,0 +1,239 @@
+MSBuild version 17.14.51+25f168cee for .NET Framework
+
+  AimAssist.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Config.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui-SFML.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_demo.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_draw.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_tables.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_widgets.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  ESP.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  HUD.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Marker.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Console.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_custom.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  imgui_helper.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Menu.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  BackgroundManager.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  ImageLoader.cpp
+  ThemeManager.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  ModuleManager.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  RCS.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Compiling...
+  Set.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  SetManager.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  Source.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  LuaManager.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(13,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,21): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(39,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(53,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Vec2H.hpp(81,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): error C2017: illegal escape sequence [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\dependencies\imgui\imgui.h(63,10): fatal error C1083: Cannot open include file: 'imconfig-SFML.h\': No such file or directory [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  ColorH.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  FileH.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(15,37): warning C4267: 'argument': conversion from 'size_t' to '_Elem', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.29.30133\include\algorithm(2650,24): warning C4244: 'argument': conversion from 'unsigned __int64' to 'char', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(29): message : see reference to function template instantiation '_OutIt std::transform<std::_Array_iterator<_Ty,12>,std::back_insert_iterator<std::string>,Obf::Xor_String<12>::()::<lambda_4a0e931e4636c70dd231d4f80f03d884>>(const _InIt,const _InIt,_OutIt,_Fn)' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+          with
+          [
+              _OutIt=std::back_insert_iterator<std::string>,
+              _Ty=char,
+              _InIt=std::_Array_iterator<char,12>,
+              _Fn=Obf::Xor_String<12>::()::<lambda_4a0e931e4636c70dd231d4f80f03d884>
+          ]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\Obf.hpp(24): message : while compiling class template member function 'std::string Obf::Xor_String<12>::operator ()(void)' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\FileH.hpp(10): message : see reference to class template instantiation 'Obf::Xor_String<12>' being compiled [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  MH.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.hpp(4,31): warning C4305: 'initializing': truncation from 'double' to 'const float' [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.cpp(76,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\MH.cpp(89,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  StringH.cpp
+D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\util\StringH.cpp(198,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\imgui-advanced-cheat-menu\imgui-advanced-cheat-menu\ImGui Advanced Cheat Menu.vcxproj]
+  TimeH.cpp
