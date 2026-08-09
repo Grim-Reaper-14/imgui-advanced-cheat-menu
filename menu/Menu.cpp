@@ -20,6 +20,13 @@
 #include <string>
 #include <vector>
 
+namespace {
+    constexpr float kSidebarWidth = 210.0f;
+    constexpr float kSidebarInnerWidth = 194.0f;
+    constexpr float kWindowWidth = 980.0f;
+    constexpr float kWindowHeight = 680.0f;
+}
+
 void Menu::setColors() {
     if (!style)
         style = &ImGui::GetStyle();
@@ -65,7 +72,7 @@ void Menu::loadFont() {
 
     ImFontConfig bigFontConfig;
     bigFontConfig.FontDataOwnedByAtlas = false;
-    bigFont = io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 24.0f, &bigFontConfig);
+    bigFont = io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 26.0f, &bigFontConfig);
 
     ImFontConfig bigIconConfig;
     bigIconConfig.MergeMode = true;
@@ -80,14 +87,15 @@ void Menu::loadTheme() {
     loadFont();
 
     style = &ImGui::GetStyle();
-    style->WindowRounding = 8.0f;
+    style->WindowRounding = 0.0f;
     style->ChildRounding = 8.0f;
-    style->FrameRounding = 4.0f;
-    style->GrabRounding = 4.0f;
-    style->PopupRounding = 6.0f;
-    style->ScrollbarSize = 9.0f;
-    style->FramePadding = ImVec2(6.0f, 4.0f);
-    style->ItemSpacing = ImVec2(6.0f, 6.0f);
+    style->FrameRounding = 5.0f;
+    style->GrabRounding = 5.0f;
+    style->PopupRounding = 7.0f;
+    style->ScrollbarSize = 10.0f;
+    style->WindowPadding = ImVec2(16.0f, 16.0f);
+    style->FramePadding = ImVec2(8.0f, 6.0f);
+    style->ItemSpacing = ImVec2(8.0f, 8.0f);
 
     setColors();
 
@@ -100,34 +108,39 @@ void Menu::loadTheme() {
 }
 
 void Menu::renderLogo() {
-    ImGui::BeginChild("##sidebar-logo", ImVec2(158.0f, 58.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild("##sidebar-logo", ImVec2(kSidebarInnerWidth, 88.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::SetCursorPosY(14.0f);
 
     if (sf::Texture* texture = ImageLoader::i().get("sidebar.logo")) {
         const auto size = texture->getSize();
         if (size.x > 0 && size.y > 0) {
             sf::Sprite sprite(*texture);
-            const float height = 30.0f;
+            const float height = 38.0f;
             const float scale = height / static_cast<float>(size.y);
             sprite.setScale(scale, scale);
             ImGui::Image(sprite);
-            ImGui::SameLine();
+            ImGui::SameLine(0.0f, 10.0f);
         }
     }
 
+    ImGui::BeginGroup();
     ImGui::PushFont(bigFont);
     ImGui::TextUnformatted("Revival");
     ImGui::PopFont();
+    ImGui::TextDisabled("Standalone UI");
+    ImGui::EndGroup();
     ImGui::EndChild();
 }
 
 void Menu::renderUser() {
-    constexpr float height = 76.0f;
+    constexpr float height = 82.0f;
     const float remaining = ImGui::GetContentRegionAvail().y;
     if (remaining > height)
         ImGui::Dummy(ImVec2(0.0f, remaining - height - style->ItemSpacing.y));
 
-    ImGui::BeginChild("##sidebar-status", ImVec2(158.0f, height), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild("##sidebar-status", ImVec2(kSidebarInnerWidth, height), true, ImGuiWindowFlags_NoScrollbar);
     ImGui::TextUnformatted("Revival v2.1");
+    ImGui::Spacing();
     ImGui::TextDisabled("%.0f FPS", ImGui::GetIO().Framerate);
     ImGui::TextDisabled("Lua: %s", LuaManager::i().isAvailable() ? "ready" : "optional");
     ImGui::EndChild();
@@ -141,10 +154,10 @@ void Menu::renderPanel() {
 }
 
 void Menu::renderTabs() {
-    ImGui::BeginChild("##sidebar-tabs", ImVec2(158.0f, 350.0f), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild("##sidebar-tabs", ImVec2(kSidebarInnerWidth, 390.0f), true, ImGuiWindowFlags_NoScrollbar);
 
     static ImGuiTextFilter2 filter;
-    filter.Draw2(ICON_FA_SEARCH " Search", 140.0f);
+    filter.Draw2(ICON_FA_SEARCH " Search", 176.0f);
     ImGui::Spacing();
 
     const std::array<std::string, 6> tabNames = {
@@ -168,7 +181,7 @@ void Menu::renderTabs() {
         ImGui::PushStyleColor(ImGuiCol_Button, selected ? style->Colors[ImGuiCol_ButtonActive] : transparent);
         ImGui::PushStyleColor(ImGuiCol_Text, selected ? style->Colors[ImGuiCol_Text] : *notSelectedTextColor);
 
-        if (ImGui::Button(tabNames[i].c_str(), ImVec2(140.0f, 40.0f)))
+        if (ImGui::Button(tabNames[i].c_str(), ImVec2(176.0f, 46.0f)))
             state.selectedTab = i;
 
         ImGui::PopStyleColor(2);
@@ -181,7 +194,7 @@ void Menu::renderTabs() {
 void Menu::renderLegit() {
     ImGuiHelper::drawTabHorizontally(
         "##legit-tabs",
-        ImVec2(ImGuiHelper::getWidth(), 52.0f),
+        ImVec2(ImGuiHelper::getWidth(), 62.0f),
         { obf("Aim Assist"), obf("Recoil") },
         state.legitSubTab);
 
@@ -199,7 +212,7 @@ void Menu::renderLegit() {
 void Menu::renderVisuals() {
     ImGuiHelper::drawTabHorizontally(
         "##visual-tabs",
-        ImVec2(ImGuiHelper::getWidth(), 52.0f),
+        ImVec2(ImGuiHelper::getWidth(), 62.0f),
         { obf("ESP"), obf("Markers") },
         state.visualSubTab);
 
@@ -227,15 +240,18 @@ void Menu::render() {
 
     ThemeManager::i().applyLiveStyle();
 
-    ImGui::SetNextWindowSize(ImVec2(860.0f, 620.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(kWindowWidth, kWindowHeight), ImGuiCond_Always);
     ImGui::Begin(
         "##revival-menu",
         nullptr,
-        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoCollapse |
             ImGuiWindowFlags_NoTitleBar |
             ImGuiWindowFlags_NoScrollbar |
-            ImGuiWindowFlags_NoScrollWithMouse);
+            ImGuiWindowFlags_NoScrollWithMouse |
+            ImGuiWindowFlags_NoBringToFrontOnFocus);
 
     const ImVec2 windowPos = ImGui::GetWindowPos();
     const ImVec2 windowSize = ImGui::GetWindowSize();
@@ -244,7 +260,7 @@ void Menu::render() {
         ImVec2(windowPos.x + windowSize.x, windowPos.y + windowSize.y));
 
     if (ImGui::BeginTable("##main-layout", 2, ImGuiTableFlags_SizingStretchProp)) {
-        ImGui::TableSetupColumn("##sidebar", ImGuiTableColumnFlags_WidthFixed, 173.0f);
+        ImGui::TableSetupColumn("##sidebar", ImGuiTableColumnFlags_WidthFixed, kSidebarWidth);
         ImGui::TableSetupColumn("##content", ImGuiTableColumnFlags_WidthStretch);
         ImGui::TableNextRow();
 
@@ -252,6 +268,7 @@ void Menu::render() {
         renderPanel();
 
         ImGui::TableSetColumnIndex(1);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 8.0f);
         switch (state.selectedTab) {
         case 0:
             renderLegit();
