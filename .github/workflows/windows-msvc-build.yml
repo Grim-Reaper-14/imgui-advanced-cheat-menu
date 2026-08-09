@@ -21,6 +21,58 @@ jobs:
           submodules: recursive
           fetch-depth: 1
 
+      - name: Vendor pinned UI dependencies
+        if: hashFiles('.gitmodules') != ''
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $temp = Join-Path $env:RUNNER_TEMP 'vendored-ui'
+          New-Item -ItemType Directory -Force (Join-Path $temp 'imgui') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $temp 'imgui-sfml-src') | Out-Null
+
+          $imguiFiles = @(
+            'imconfig.h',
+            'imgui.h',
+            'imgui_internal.h',
+            'imgui.cpp',
+            'imgui_demo.cpp',
+            'imgui_draw.cpp',
+            'imgui_tables.cpp',
+            'imgui_widgets.cpp',
+            'imstb_rectpack.h',
+            'imstb_textedit.h',
+            'imstb_truetype.h'
+          )
+
+          $sfmlFiles = @(
+            'imconfig-SFML.h',
+            'imgui-SFML.h',
+            'imgui-SFML_export.h',
+            'imgui-SFML.cpp'
+          )
+
+          foreach ($file in $imguiFiles) {
+            Copy-Item (Join-Path 'dependencies/imgui' $file) (Join-Path $temp 'imgui' $file) -Force
+          }
+          foreach ($file in $sfmlFiles) {
+            Copy-Item (Join-Path 'dependencies/imgui-sfml-src' $file) (Join-Path $temp 'imgui-sfml-src' $file) -Force
+          }
+
+          git rm -f --cached -- dependencies/imgui dependencies/imgui-sfml-src
+          Remove-Item -Recurse -Force dependencies/imgui, dependencies/imgui-sfml-src
+          git rm -f -- .gitmodules
+
+          New-Item -ItemType Directory -Force dependencies/imgui | Out-Null
+          New-Item -ItemType Directory -Force dependencies/imgui-sfml-src | Out-Null
+          Copy-Item (Join-Path $temp 'imgui/*') dependencies/imgui/ -Force
+          Copy-Item (Join-Path $temp 'imgui-sfml-src/*') dependencies/imgui-sfml-src/ -Force
+
+          git add -- dependencies/imgui dependencies/imgui-sfml-src
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Vendor Dear ImGui and ImGui-SFML sources'
+          git push origin HEAD:revival-v2-cleanup
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
@@ -44,7 +96,8 @@ jobs:
           BUILD_STATE: ${{ steps.build.outputs.state }}
         run: |
           $state = if ($env:BUILD_STATE) { $env:BUILD_STATE } else { 'failure' }
-          gh api --method POST "repos/$env:GITHUB_REPOSITORY/statuses/$env:GITHUB_SHA" -f state="$state" -f context='Windows MSVC Build' -f description="Release x64 MSVC build: $state"
+          $buildSha = (git rev-parse HEAD).Trim()
+          gh api --method POST "repos/$env:GITHUB_REPOSITORY/statuses/$buildSha" -f state="$state" -f context='Windows MSVC Build' -f description="Release x64 MSVC build: $state"
 
       - name: Publish build log
         if: always()
@@ -55,6 +108,7 @@ jobs:
         run: |
           $state = if ($env:BUILD_STATE) { $env:BUILD_STATE } else { 'failure' }
           $exitCode = if ($env:BUILD_EXIT_CODE) { $env:BUILD_EXIT_CODE } else { '-1' }
+          $buildSha = (git rev-parse HEAD).Trim()
           $resultDir = Join-Path $env:RUNNER_TEMP 'ci-build-results'
 
           git fetch origin ci-build-results 2>$null
@@ -67,7 +121,7 @@ jobs:
 
           Copy-Item (Join-Path $env:RUNNER_TEMP 'msbuild.log') (Join-Path $resultDir 'latest.log') -Force
           [ordered]@{
-            source_sha = $env:GITHUB_SHA
+            source_sha = $buildSha
             state = $state
             exit_code = [int]$exitCode
             run_id = $env:GITHUB_RUN_ID
@@ -79,12 +133,10 @@ jobs:
           git -C $resultDir config user.name 'github-actions[bot]'
           git -C $resultDir config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C $resultDir add -- latest.log status.json
-          git -C $resultDir commit -m "ci: record Windows MSVC build for $env:GITHUB_SHA"
+          git -C $resultDir commit -m "ci: record Windows MSVC build for $buildSha"
           git -C $resultDir push origin HEAD:ci-build-results --force
 
       - name: Fail job when MSBuild fails
         if: steps.build.outputs.state != 'success'
         shell: pwsh
         run: exit 1
-
-# Revival V2 full-source validation
