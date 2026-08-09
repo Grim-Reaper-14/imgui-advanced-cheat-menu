@@ -29,7 +29,7 @@ namespace {
     constexpr float kSidebarInnerWidth = 204.0f;
     constexpr float kWindowWidth = 1080.0f;
     constexpr float kWindowHeight = 800.0f;
-    constexpr float kHeaderHeight = 244.0f;
+    constexpr float kHeaderHeight = 224.0f;
     constexpr float kNavWidth = 186.0f;
     constexpr float kNavHeight = 48.0f;
     constexpr float kStatusHeight = 82.0f;
@@ -37,8 +37,8 @@ namespace {
     constexpr const char* kLegitIcon = ICON_FA_CROSSHAIRS;
     constexpr const char* kVisualIcon = ICON_FA_EYE;
     constexpr const char* kMiscIcon = ICON_FA_COG;
-    constexpr const char* kScriptIcon = "\xEF\x84\xA1"; // Font Awesome code
-    constexpr const char* kThemeIcon = "\xEF\x94\xBF";  // Font Awesome palette
+    constexpr const char* kScriptIcon = "\xEF\x84\xA1";
+    constexpr const char* kThemeIcon = "\xEF\x94\xBF";
     constexpr const char* kConfigIcon = ICON_FA_SAVE;
 
     std::filesystem::path executableDirectory() {
@@ -85,8 +85,6 @@ namespace {
         if (const auto path = findAssetFrom(executableDirectory(), fileName); !path.empty())
             return path;
 
-        // MSVC commonly expands __FILE__ to a full project path. This gives us
-        // one more reliable anchor when launching from an unrelated working directory.
         const std::filesystem::path sourceFile = __FILE__;
         if (sourceFile.is_absolute()) {
             if (const auto path = findAssetFrom(sourceFile.parent_path(), fileName); !path.empty())
@@ -116,7 +114,7 @@ namespace {
         int index,
         const char* label,
         const char* fallbackIcon,
-        const char* imageId = nullptr) {
+        const char* imageId) {
         const bool selected = Menu::state.selectedTab == index;
         const ImVec4 transparent(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -148,8 +146,7 @@ namespace {
             selected ? IM_COL32(255, 255, 255, 65) : IM_COL32(68, 76, 92, 80),
             6.0f);
 
-        sf::Texture* texture = imageId ? ImageLoader::i().get(imageId) : nullptr;
-        if (texture) {
+        if (sf::Texture* texture = ImageLoader::i().get(imageId)) {
             ImGui::SetCursorScreenPos(ImVec2(iconMin.x + 2.0f, iconMin.y + 2.0f));
             ImGui::Image(*texture, sf::Vector2f(30.0f, 30.0f));
         }
@@ -245,8 +242,12 @@ void Menu::loadTheme() {
     setColors();
 
     loadUiAsset("revival.header", "revival_header.jpg");
+    loadUiAsset("revival.legit", "legit_icon.jpg");
+    loadUiAsset("revival.visuals", "visuals_icon.jpg");
+    loadUiAsset("revival.misc", "misc_icon.jpg");
     loadUiAsset("revival.scripts", "scripts_icon.jpg");
     loadUiAsset("revival.themes", "themes_icon.jpg");
+    loadUiAsset("revival.configs", "configs_icon.jpg");
 
     BackgroundManager::i().initialize();
     ThemeManager::i().applyPreset(ThemeManager::i().currentPreset());
@@ -256,7 +257,7 @@ void Menu::renderLogo() {
     ImGui::BeginChild(
         "##revival-brand-header",
         ImVec2(0.0f, kHeaderHeight),
-        true,
+        false,
         ImGuiWindowFlags_NoScrollbar |
             ImGuiWindowFlags_NoScrollWithMouse |
             ImGuiWindowFlags_NoInputs);
@@ -264,21 +265,31 @@ void Menu::renderLogo() {
     if (sf::Texture* texture = ImageLoader::i().get("revival.header")) {
         const ImVec2 available = ImGui::GetContentRegionAvail();
         const auto native = texture->getSize();
-        if (native.x > 0 && native.y > 0) {
-            const float aspect = static_cast<float>(native.x) / static_cast<float>(native.y);
-            float width = available.x;
-            float height = width / aspect;
-            if (height > available.y) {
-                height = available.y;
-                width = height * aspect;
+
+        if (native.x > 0 && native.y > 0 && available.x > 0.0f && available.y > 0.0f) {
+            const float textureAspect = static_cast<float>(native.x) / static_cast<float>(native.y);
+            const float viewAspect = available.x / available.y;
+            ImVec2 uv0(0.0f, 0.0f);
+            ImVec2 uv1(1.0f, 1.0f);
+
+            if (textureAspect > viewAspect) {
+                const float visibleWidth = viewAspect / textureAspect;
+                const float crop = (1.0f - visibleWidth) * 0.5f;
+                uv0.x = crop;
+                uv1.x = 1.0f - crop;
+            }
+            else {
+                const float visibleHeight = textureAspect / viewAspect;
+                const float crop = (1.0f - visibleHeight) * 0.5f;
+                uv0.y = crop;
+                uv1.y = 1.0f - crop;
             }
 
-            const float offsetX = (available.x - width) * 0.5f;
-            const float offsetY = (available.y - height) * 0.5f;
-            ImGui::SetCursorPos(ImVec2(
-                ImGui::GetCursorPosX() + offsetX,
-                ImGui::GetCursorPosY() + offsetY));
-            ImGui::Image(*texture, sf::Vector2f(width, height));
+            ImGui::Image(
+                *texture,
+                sf::Vector2f(available.x, available.y),
+                sf::Color::White,
+                sf::Color::Transparent);
         }
     }
     else {
@@ -333,12 +344,12 @@ void Menu::renderTabs() {
     };
 
     const std::array<NavEntry, 6> navEntries = {{
-        { "LegitBot", kLegitIcon, nullptr },
-        { "Visuals", kVisualIcon, nullptr },
-        { "Misc", kMiscIcon, nullptr },
+        { "LegitBot", kLegitIcon, "revival.legit" },
+        { "Visuals", kVisualIcon, "revival.visuals" },
+        { "Misc", kMiscIcon, "revival.misc" },
         { "Scripts", kScriptIcon, "revival.scripts" },
         { "Themes", kThemeIcon, "revival.themes" },
-        { "Configs", kConfigIcon, nullptr },
+        { "Configs", kConfigIcon, "revival.configs" },
     }};
 
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f);
@@ -352,8 +363,6 @@ void Menu::renderTabs() {
         ImGui::Dummy(ImVec2(0.0f, 2.0f));
     }
 
-    // Reserve some vertical room so the scrollbar remains useful as more
-    // Revival pages are added instead of forcing another layout rewrite.
     ImGui::Dummy(ImVec2(0.0f, 70.0f));
 
     ImGui::PopStyleVar();
@@ -441,6 +450,13 @@ void Menu::render() {
 
         ImGui::TableSetColumnIndex(1);
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 8.0f);
+
+        ImGui::BeginChild(
+            "##main-content-scroll",
+            ImVec2(0.0f, 0.0f),
+            false,
+            ImGuiWindowFlags_AlwaysVerticalScrollbar);
+
         switch (state.selectedTab) {
         case 0:
             renderLegit();
@@ -465,6 +481,7 @@ void Menu::render() {
             break;
         }
 
+        ImGui::EndChild();
         ImGui::EndTable();
     }
 
