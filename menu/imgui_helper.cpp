@@ -1,77 +1,99 @@
 #include "imgui_helper.hpp"
+
 #include "Menu.hpp"
-#include "../util/MH.hpp"
+
+#include <algorithm>
 
 float ImGuiHelper::getWidth() {
-	return ImGui::GetContentRegionAvail().x;
+    return ImGui::GetContentRegionAvail().x;
 }
+
 float ImGuiHelper::getHeight() {
-	return ImGui::GetContentRegionAvail().y;
+    return ImGui::GetContentRegionAvail().y;
 }
 
-void ImGuiHelper::drawTabHorizontally(std::string childName, ImVec2 childSize, std::vector<std::string>tabNames, int& selectedSubTab) {
-	int length = tabNames.front().length(); // get shortest string length
-	int strIndex = 1;
-	for (int i = 1; i < tabNames.size(); i++) {
-		if (length > tabNames.at(i).length()) {
-			length = tabNames.at(i).length();
-			strIndex = i;
-		}
-	}
+void ImGuiHelper::drawTabHorizontally(
+    const std::string& childName,
+    const ImVec2& childSize,
+    const std::vector<std::string>& tabNames,
+    int& selectedSubTab) {
+    if (tabNames.empty())
+        return;
 
-	ImGui::BeginChild(childName.c_str(), childSize, true, ImGuiWindowFlags_HorizontalScrollbar);
+    selectedSubTab = std::clamp(selectedSubTab, 0, static_cast<int>(tabNames.size()) - 1);
 
-	int minWidth = ImGuiHelper::getTextLength(tabNames.at(strIndex).c_str()).x;
-	int maxWidth = 200;
+    ImGui::BeginChild(childName.c_str(), childSize, true, ImGuiWindowFlags_NoScrollbar);
 
-	int btnWidth = (ImGuiHelper::getWidth() - ImGui::GetStyle().ItemSpacing.x * (tabNames.size())) / tabNames.size();
-	int btnHeight = MH::clamp(ImGuiHelper::getHeight(), 20, 60);
-	btnWidth = (std::max)(minWidth, (std::min)(btnWidth, maxWidth));
+    const float spacing = ImGui::GetStyle().ItemSpacing.x;
+    const float availableWidth = ImGui::GetContentRegionAvail().x;
+    const float buttonWidth = std::clamp(
+        (availableWidth - spacing * static_cast<float>(tabNames.size() - 1)) /
+            static_cast<float>(tabNames.size()),
+        80.0f,
+        220.0f);
+    const float buttonHeight = std::clamp(ImGui::GetContentRegionAvail().y, 28.0f, 44.0f);
 
-	{ // center buttons
-		// tell Dear ImGui to render the button at the new pos
-		ImGui::SetCursorPosX((childSize.x - btnWidth * tabNames.size() - ImGui::GetStyle().ItemSpacing.x) / 2);
-	}
+    const float rowWidth = buttonWidth * static_cast<float>(tabNames.size()) +
+        spacing * static_cast<float>(tabNames.size() - 1);
+    if (rowWidth < availableWidth)
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (availableWidth - rowWidth) * 0.5f);
 
-	ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 5); // round buttons
-	for (int i = 0; i < tabNames.size(); i++) {
-		std::string it = tabNames.at(i);
-		ImGui::PushStyleColor(ImGuiCol_Button, selectedSubTab == i ? ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] : ImGui::GetStyle().Colors[ImGuiCol_Button]);
-		ImGui::PushStyleColor(ImGuiCol_Text, selectedSubTab == i ? ImGui::GetStyle().Colors[ImGuiCol_Text] : *Menu::notSelectedTextColor);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 6.0f);
 
+    for (int i = 0; i < static_cast<int>(tabNames.size()); ++i) {
+        const bool selected = selectedSubTab == i;
+        ImGui::PushStyleColor(
+            ImGuiCol_Button,
+            selected ? ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] : ImGui::GetStyle().Colors[ImGuiCol_Button]);
+        ImGui::PushStyleColor(
+            ImGuiCol_Text,
+            selected ? ImGui::GetStyle().Colors[ImGuiCol_Text] : *Menu::notSelectedTextColor);
 
-		if (ImGui::Button(it.c_str(), ImVec2(btnWidth, btnHeight))) selectedSubTab = i;
-		ImGui::SameLine();
-		ImGui::PopStyleColor(2);
+        if (ImGui::Button(tabNames[i].c_str(), ImVec2(buttonWidth, buttonHeight)))
+            selectedSubTab = i;
 
-	}
-	ImGui::PopStyleVar();
+        ImGui::PopStyleColor(2);
 
-	ImGui::EndChild();
+        if (i + 1 < static_cast<int>(tabNames.size()))
+            ImGui::SameLine();
+    }
+
+    ImGui::PopStyleVar();
+    ImGui::EndChild();
 }
 
 ImVec4 ImGuiHelper::rgbaToVec4(float r, float g, float b, float a) {
-	return ImVec4(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
-}
-ImVec4 ImGuiHelper::rgbaToVec4(ImColor& col) {
-	return col.Value;
+    return ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
 }
 
-ImVec2 ImGuiHelper::getTextLength(std::string text) {
-	return ImGui::CalcTextSize(text.c_str());
+ImVec4 ImGuiHelper::rgbaToVec4(const ImColor& color) {
+    return color.Value;
 }
 
-void ImGuiHelper::renderCombo(std::string title, std::vector<std::string>items, int& index, int comboWidth) {
-	ImGui::PushItemWidth(comboWidth);
-	if (ImGui::BeginCombo(title.c_str(), items.at(index).c_str(), 0)) {
+ImVec2 ImGuiHelper::getTextLength(const std::string& text) {
+    return ImGui::CalcTextSize(text.c_str());
+}
 
-		for (int n = 0; n < items.size(); n++) {
-			const bool is_selected = (index == n);
-			if (ImGui::Selectable(items.at(n).c_str(), is_selected))index = n;
+void ImGuiHelper::renderCombo(
+    const std::string& title,
+    const std::vector<std::string>& items,
+    int& index,
+    float comboWidth) {
+    if (items.empty())
+        return;
 
-			if (is_selected)ImGui::SetItemDefaultFocus();// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-		}
-		ImGui::EndCombo();
-	}
-	ImGui::PopItemWidth();
+    index = std::clamp(index, 0, static_cast<int>(items.size()) - 1);
+
+    ImGui::PushItemWidth(comboWidth);
+    if (ImGui::BeginCombo(title.c_str(), items[index].c_str())) {
+        for (int i = 0; i < static_cast<int>(items.size()); ++i) {
+            const bool selected = index == i;
+            if (ImGui::Selectable(items[i].c_str(), selected))
+                index = i;
+            if (selected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
+    ImGui::PopItemWidth();
 }

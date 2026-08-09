@@ -91,6 +91,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -105,6 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -161,11 +163,15 @@
     <ClCompile Include="menu\imgui_custom.cpp" />
     <ClCompile Include="menu\imgui_helper.cpp" />
     <ClCompile Include="menu\Menu.cpp" />
+    <ClCompile Include="menu\BackgroundManager.cpp" />
+    <ClCompile Include="menu\ImageLoader.cpp" />
+    <ClCompile Include="menu\ThemeManager.cpp" />
     <ClCompile Include="ModuleManager.cpp" />
     <ClCompile Include="RCS.cpp" />
     <ClCompile Include="Set.cpp" />
     <ClCompile Include="SetManager.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="scripting\LuaManager.cpp" />
     <ClCompile Include="util\ColorH.cpp" />
     <ClCompile Include="util\FileH.cpp" />
     <ClCompile Include="util\MH.cpp" />
@@ -193,11 +199,15 @@
     <ClInclude Include="menu\imgui_helper.hpp" />
     <ClInclude Include="menu\imgui_notify.h" />
     <ClInclude Include="menu\Menu.hpp" />
+    <ClInclude Include="menu\BackgroundManager.hpp" />
+    <ClInclude Include="menu\ImageLoader.hpp" />
+    <ClInclude Include="menu\ThemeManager.hpp" />
     <ClInclude Include="Module.hpp" />
     <ClInclude Include="ModuleManager.hpp" />
     <ClInclude Include="RCS.hpp" />
     <ClInclude Include="Set.hpp" />
     <ClInclude Include="SetManager.hpp" />
+    <ClInclude Include="scripting\LuaManager.hpp" />
     <ClInclude Include="util\ColorH.hpp" />
     <ClInclude Include="util\FileH.hpp" />
     <ClInclude Include="util\MH.hpp" />

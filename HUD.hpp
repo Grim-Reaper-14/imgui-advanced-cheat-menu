@@ -1,23 +1,33 @@
 #pragma once
+
+#include "Module.hpp"
 #include "imgui.h"
 #include "util/Obf.hpp"
 #include "util/Singleton.hpp"
-#include "Module.hpp"
 
 class HUD : public Singleton<HUD>, public Module {
-	friend class Singleton<HUD>;
+    friend class Singleton<HUD>;
+
 public:
-	int* alignML, * sortML;
-	ImVec4* colML, * colML_Bg;
-	Vec3f* speedML, *offsetML, *rangeML;
-	bool* isML, * isMLRainbow, // render Module List
-		* isTime;
+    int* alignML = nullptr;
+    int* sortML = nullptr;
 
-	HUD();
-	void renderImGui();
-	void render();
-	void renderML();
+    ImVec4* colML = nullptr;
+    ImVec4* colML_Bg = nullptr;
 
-	void onEnable() override {}
-	void onDisable() override {}
+    Vec3f* speedML = nullptr;
+    Vec3f* offsetML = nullptr;
+    Vec3f* rangeML = nullptr;
+
+    bool* isML = nullptr;
+    bool* isMLRainbow = nullptr;
+
+    HUD();
+
+    void renderImGui();
+    void render();
+    void renderML();
+
+    void onEnable() override {}
+    void onDisable() override {}
 };

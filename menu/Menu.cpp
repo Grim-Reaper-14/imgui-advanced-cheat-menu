@@ -1,340 +1,283 @@
 #include "Menu.hpp"
-#include "../HUD.hpp"
-#include "../RCS.hpp"
-#include "../ESP.hpp"
-#include "../Marker.hpp"
+
 #include "../AimAssist.hpp"
-#include "../ModuleManager.hpp"
-
 #include "../Config.hpp"
-#include "../util/ColorH.hpp"
-#include "../util/Obf.hpp"
+#include "../ESP.hpp"
+#include "../HUD.hpp"
+#include "../Marker.hpp"
+#include "../RCS.hpp"
+#include "../scripting/LuaManager.hpp"
+#include "BackgroundManager.hpp"
 #include "Fonts.hpp"
+#include "ImageLoader.hpp"
+#include "ThemeManager.hpp"
 
-#include <vector>
 #include <imgui-SFML.h>
-#include <Windows.h>
+#include <SFML/Graphics/Sprite.hpp>
+
+#include <array>
+#include <filesystem>
+#include <string>
+#include <vector>
 
 void Menu::setColors() {
-	style->Colors[ImGuiCol_WindowBg] = *winCol;
-	style->Colors[ImGuiCol_Border] = ImColor(0, 0, 0, 0);
-	style->Colors[ImGuiCol_Button] = *bgCol;
-	style->Colors[ImGuiCol_ButtonActive] = *btnActiveCol;
-	style->Colors[ImGuiCol_ButtonHovered] = *btnHoverCol;
-	style->Colors[ImGuiCol_FrameBg] = *bgCol;
-	style->Colors[ImGuiCol_FrameBgActive] = *frameCol;
-	style->Colors[ImGuiCol_FrameBgHovered] = *hoverCol;
-	style->Colors[ImGuiCol_Text] = *textCol;
-	style->Colors[ImGuiCol_ChildBg] = *childCol;
-	style->Colors[ImGuiCol_CheckMark] = *itemActiveCol;
-	style->Colors[ImGuiCol_SliderGrab] = *itemCol;
-	style->Colors[ImGuiCol_SliderGrabActive] = *itemActiveCol;
-	style->Colors[ImGuiCol_Header] = *itemActiveCol;
-	style->Colors[ImGuiCol_HeaderHovered] = *itemCol;
-	style->Colors[ImGuiCol_HeaderActive] = *itemActiveCol;
-	style->Colors[ImGuiCol_ResizeGrip] = *resizeGripCol;
-	style->Colors[ImGuiCol_ResizeGripHovered] = *resizeGripHoverCol;
-	style->Colors[ImGuiCol_ResizeGripActive] = *itemActiveCol;
-	style->Colors[ImGuiCol_SeparatorHovered] = *resizeGripHoverCol;
-	style->Colors[ImGuiCol_SeparatorActive] = *itemActiveCol;
-	style->Colors[ImGuiCol_TitleBgActive] = *itemActiveCol;
+    if (!style)
+        style = &ImGui::GetStyle();
+
+    style->Colors[ImGuiCol_WindowBg] = *winCol;
+    style->Colors[ImGuiCol_Border] = ImColor(0, 0, 0, 0);
+    style->Colors[ImGuiCol_Button] = *bgCol;
+    style->Colors[ImGuiCol_ButtonActive] = *btnActiveCol;
+    style->Colors[ImGuiCol_ButtonHovered] = *btnHoverCol;
+    style->Colors[ImGuiCol_FrameBg] = *bgCol;
+    style->Colors[ImGuiCol_FrameBgActive] = *frameCol;
+    style->Colors[ImGuiCol_FrameBgHovered] = *hoverCol;
+    style->Colors[ImGuiCol_Text] = *textCol;
+    style->Colors[ImGuiCol_ChildBg] = *childCol;
+    style->Colors[ImGuiCol_CheckMark] = *itemActiveCol;
+    style->Colors[ImGuiCol_SliderGrab] = *itemCol;
+    style->Colors[ImGuiCol_SliderGrabActive] = *itemActiveCol;
+    style->Colors[ImGuiCol_Header] = *itemActiveCol;
+    style->Colors[ImGuiCol_HeaderHovered] = *itemCol;
+    style->Colors[ImGuiCol_HeaderActive] = *itemActiveCol;
+    style->Colors[ImGuiCol_ResizeGrip] = *resizeGripCol;
+    style->Colors[ImGuiCol_ResizeGripHovered] = *resizeGripHoverCol;
+    style->Colors[ImGuiCol_ResizeGripActive] = *itemActiveCol;
+    style->Colors[ImGuiCol_SeparatorHovered] = *resizeGripHoverCol;
+    style->Colors[ImGuiCol_SeparatorActive] = *itemActiveCol;
+    style->Colors[ImGuiCol_TitleBgActive] = *itemActiveCol;
 }
 
 void Menu::loadFont() {
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->Clear();
 
-	io.Fonts->Clear(); // clear fonts if you loaded some before (even if only default one was loaded)
+    ImFontConfig fontConfig;
+    fontConfig.FontDataOwnedByAtlas = false;
+    io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 18.0f, &fontConfig);
 
-	ImFontConfig font_cfg;
-	font_cfg.FontDataOwnedByAtlas = false; // if true it will try to free memory and fail
-	io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 18, &font_cfg);
+    static const ImWchar iconRanges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    ImFontConfig iconConfig;
+    iconConfig.MergeMode = true;
+    iconConfig.PixelSnapH = true;
+    iconConfig.FontDataOwnedByAtlas = false;
+    io.Fonts->AddFontFromMemoryTTF((void*)fontAwesome, sizeof(fontAwesome), 18.0f, &iconConfig, iconRanges);
 
-	static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-	ImFontConfig icons_config;
-	icons_config.MergeMode = true;
-	icons_config.PixelSnapH = true;
-	icons_config.FontDataOwnedByAtlas = false;
-	io.Fonts->AddFontFromMemoryTTF((void*)fontAwesome, sizeof(fontAwesome), 18, &icons_config, icons_ranges);
+    ImFontConfig bigFontConfig;
+    bigFontConfig.FontDataOwnedByAtlas = false;
+    bigFont = io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 24.0f, &bigFontConfig);
 
-	ImFontConfig bigFontCfg;
-	bigFontCfg.FontDataOwnedByAtlas = false; // if true it will try to free memory and fail
-	bigFont = io.Fonts->AddFontFromMemoryTTF((void*)poppinsFont, sizeof(poppinsFont), 24, &bigFontCfg);
-	io.Fonts->AddFontFromMemoryTTF((void*)fontAwesome, sizeof(fontAwesome), 18, &icons_config, icons_ranges);
+    ImFontConfig bigIconConfig;
+    bigIconConfig.MergeMode = true;
+    bigIconConfig.PixelSnapH = true;
+    bigIconConfig.FontDataOwnedByAtlas = false;
+    io.Fonts->AddFontFromMemoryTTF((void*)fontAwesome, sizeof(fontAwesome), 18.0f, &bigIconConfig, iconRanges);
 
-	ImGui::SFML::UpdateFontTexture(); // important call: updates font texture
+    ImGui::SFML::UpdateFontTexture();
 }
 
 void Menu::loadTheme() {
-	loadFont();
+    loadFont();
 
-	logoTx = new sf::Texture();
-	//logoTx->setSmooth(true);
-	logoTx->loadFromMemory((void*)logo, sizeof(logo));
+    style = &ImGui::GetStyle();
+    style->WindowRounding = 8.0f;
+    style->ChildRounding = 8.0f;
+    style->FrameRounding = 4.0f;
+    style->GrabRounding = 4.0f;
+    style->PopupRounding = 6.0f;
+    style->ScrollbarSize = 9.0f;
+    style->FramePadding = ImVec2(6.0f, 4.0f);
+    style->ItemSpacing = ImVec2(6.0f, 6.0f);
 
+    setColors();
 
-	style = &ImGui::GetStyle();
+    const auto customLogo = std::filesystem::current_path() / "assets" / "icons" / "logo.png";
+    if (!ImageLoader::i().loadFromFile("sidebar.logo", customLogo, true, false))
+        ImageLoader::i().loadFromMemory("sidebar.logo", logo, sizeof(logo), true, false);
 
-	// ROUNDINGS
-	style->WindowRounding = 6;
-	style->ChildRounding = 6;
-	style->FrameRounding = 2;
-	style->GrabRounding = 2;
-	style->PopupRounding = 2; // Combobox
-
-	style->ScrollbarSize = 9;
-	style->FramePadding = ImVec2(6, 3);
-	style->ItemSpacing = ImVec2(4, 4);
-
-	setColors();
+    BackgroundManager::i().initialize();
+    ThemeManager::i().applyPreset(ThemeManager::i().currentPreset());
 }
 
 void Menu::renderLogo() {
-	ImGui::BeginGroup(); { // group it so we can redirect to Website when its pressed
-		ImGui::BeginChild(obf("Logo").c_str(), ImVec2(158, 50), true);
+    ImGui::BeginChild("##sidebar-logo", ImVec2(158.0f, 58.0f), true, ImGuiWindowFlags_NoScrollbar);
 
-		sf::Sprite sprite(*logoTx);
-		ImGui::Image(sprite);
+    if (sf::Texture* texture = ImageLoader::i().get("sidebar.logo")) {
+        const auto size = texture->getSize();
+        if (size.x > 0 && size.y > 0) {
+            sf::Sprite sprite(*texture);
+            const float height = 30.0f;
+            const float scale = height / static_cast<float>(size.y);
+            sprite.setScale(scale, scale);
+            ImGui::Image(sprite);
+            ImGui::SameLine();
+        }
+    }
 
-		ImGui::PushFont(bigFont);
-		ImGui::SameLine();
-
-		ImGui::SetCursorPosY(11); // dont know how to center it sorry :>
-		ImGui::TextUnformatted(obf("Big Paste").c_str());
-		ImGui::PopFont();
-
-		ImGui::EndChild();
-
-		if (ImGui::IsItemClicked(1)) { // redirect to a website/discord on right click
-			::ShellExecuteA(NULL, obf("open").c_str(), obf("https://www.youtube.com/watch?v=dQw4w9WgXcQ").c_str(), NULL, NULL, SW_SHOWDEFAULT);
-		}
-
-		ImGui::EndGroup();
-	}
+    ImGui::PushFont(bigFont);
+    ImGui::TextUnformatted("Revival");
+    ImGui::PopFont();
+    ImGui::EndChild();
 }
 
 void Menu::renderUser() {
+    constexpr float height = 76.0f;
+    const float remaining = ImGui::GetContentRegionAvail().y;
+    if (remaining > height)
+        ImGui::Dummy(ImVec2(0.0f, remaining - height - style->ItemSpacing.y));
 
-	int height = 80;
-	ImGui::Dummy(ImVec2(0.0f, ImGui::GetContentRegionAvail().y - height - style->ItemSpacing.y));
-	ImGui::BeginChild(obf("User").c_str(), ImVec2(158, height), true);
-
-	ImGui::EndChild();
+    ImGui::BeginChild("##sidebar-status", ImVec2(158.0f, height), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::TextUnformatted("Revival v2.1");
+    ImGui::TextDisabled("%.0f FPS", ImGui::GetIO().Framerate);
+    ImGui::TextDisabled("Lua: %s", LuaManager::i().isAvailable() ? "ready" : "optional");
+    ImGui::EndChild();
 }
 
 void Menu::renderPanel() {
-	renderLogo();
-	ImGui::Spacing();
-	renderTabs();
-	renderUser();
+    renderLogo();
+    ImGui::Spacing();
+    renderTabs();
+    renderUser();
 }
 
 void Menu::renderTabs() {
-	ImGui::BeginChild(obf("tabs").c_str(), ImVec2(158, 220), true);
+    ImGui::BeginChild("##sidebar-tabs", ImVec2(158.0f, 350.0f), true, ImGuiWindowFlags_NoScrollbar);
 
-	ImGuiTextFilter2 filter;
-	filter.Draw2(obf(ICON_FA_SEARCH" Search").c_str(), 140);
-	ImGui::Spacing();
+    static ImGuiTextFilter2 filter;
+    filter.Draw2(ICON_FA_SEARCH " Search", 140.0f);
+    ImGui::Spacing();
 
-	ImVec4 col(0, 0, 0, 0);
-	ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10); // round buttons
-	std::string tabNames[] = { obf(ICON_FA_CROSSHAIRS " LegitBot"), obf(ICON_FA_EYE " Visuals"), obf(ICON_FA_COG " Misc"), obf(ICON_FA_SAVE " Configs") };
-	for (int i = 0; i < sizeof(tabNames) / sizeof(tabNames[0]); i++) {
-		std::string it = tabNames[i];
-		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0, 0.5));
-		ImGui::PushStyleColor(ImGuiCol_Button, selectedTab == i ? style->Colors[ImGuiCol_ButtonActive] : col);
-		ImGui::PushStyleColor(ImGuiCol_Text, selectedTab == i ? style->Colors[ImGuiCol_Text] : *notSelectedTextColor);
-		if (ImGui::Button(it.c_str(), ImVec2(140, 40))) selectedTab = i;
-		ImGui::PopStyleVar();
-		ImGui::PopStyleColor(2);
-	}
-	ImGui::PopStyleVar();
+    const std::array<std::string, 6> tabNames = {
+        obf(ICON_FA_CROSSHAIRS " LegitBot"),
+        obf(ICON_FA_EYE " Visuals"),
+        obf(ICON_FA_COG " Misc"),
+        obf("<> Scripts"),
+        obf("* Themes"),
+        obf(ICON_FA_SAVE " Configs")
+    };
 
-	ImGui::EndChild();
+    const ImVec4 transparent(0.0f, 0.0f, 0.0f, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
+
+    for (int i = 0; i < static_cast<int>(tabNames.size()); ++i) {
+        if (!filter.PassFilter(tabNames[i].c_str()))
+            continue;
+
+        const bool selected = state.selectedTab == i;
+        ImGui::PushStyleColor(ImGuiCol_Button, selected ? style->Colors[ImGuiCol_ButtonActive] : transparent);
+        ImGui::PushStyleColor(ImGuiCol_Text, selected ? style->Colors[ImGuiCol_Text] : *notSelectedTextColor);
+
+        if (ImGui::Button(tabNames[i].c_str(), ImVec2(140.0f, 40.0f)))
+            state.selectedTab = i;
+
+        ImGui::PopStyleColor(2);
+    }
+
+    ImGui::PopStyleVar(2);
+    ImGui::EndChild();
 }
 
-void Menu::renderSubTab0() {
-	std::vector<std::string> arr = { obf("AimAssist"), obf("TriggerBot"), obf("Other") };
-	ImGuiHelper::drawTabHorizontally(obf("subtab-0"), ImVec2(ImGuiHelper::getWidth(), 50), arr, selectedSubTab0);
-	ImGui::Spacing();
+void Menu::renderLegit() {
+    ImGuiHelper::drawTabHorizontally(
+        "##legit-tabs",
+        ImVec2(ImGuiHelper::getWidth(), 52.0f),
+        { obf("Aim Assist"), obf("Recoil") },
+        state.legitSubTab);
 
-	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
-	ImGui::BeginChild(obf("modules-wrapper").c_str(), ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), false);
-	ImGui::PopStyleColor();
+    ImGui::Spacing();
+    ImGui::BeginChild("##legit-content", ImVec2(0.0f, 0.0f), true);
 
-	switch (selectedSubTab0) {
-	case 0: {
-		ImGui::Columns(2, nullptr, false);
-		ImGui::SetColumnOffset(1, 300);
+    if (state.legitSubTab == 0)
+        AimAssist::i().renderImGui();
+    else
+        RCS::i().renderImGui();
 
-		ImGui::BeginChild(obf("aimassist").c_str(), ImVec2(ImGuiHelper::getWidth(), 300), true);
-		AimAssist::i().renderImGui();
-		ImGui::EndChild();
-
-		ImGui::Spacing();
-
-		ImGui::BeginChild(obf("aimassist2").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		RCS::i().renderImGui();
-		ImGui::EndChild();
-
-		ImGui::NextColumn();
-
-		ImGui::BeginChild(obf("aimassist3").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-
-		break;
-	}
-	case 1: {
-
-		break;
-	}
-	case 2: {
-
-		break;
-	}
-	}
-
-	ImGui::EndChild();
+    ImGui::EndChild();
 }
 
-void Menu::renderSubTab1() {
-	ImGuiHelper::drawTabHorizontally(obf("subtab-1"), ImVec2(ImGuiHelper::getWidth(), 50), { obf("ESP"), obf("World"), obf("Other") }, selectedSubTab1);
-	ImGui::Spacing();
+void Menu::renderVisuals() {
+    ImGuiHelper::drawTabHorizontally(
+        "##visual-tabs",
+        ImVec2(ImGuiHelper::getWidth(), 52.0f),
+        { obf("ESP"), obf("Markers") },
+        state.visualSubTab);
 
-	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
-	ImGui::BeginChild(obf("modules-wrapper").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), false);
-	ImGui::PopStyleColor();
+    ImGui::Spacing();
+    ImGui::BeginChild("##visual-content", ImVec2(0.0f, 0.0f), true);
 
-	switch (selectedSubTab1) {
-	case 0: {
-		ImGui::Columns(2, nullptr, false);
-		ImGui::SetColumnOffset(1, 300);
+    if (state.visualSubTab == 0)
+        ESP::i().renderImGui();
+    else
+        Marker::i().renderImGui();
 
-		ImGui::BeginChild(obf("esp").c_str(), ImVec2(ImGuiHelper::getWidth(), 300), true);
-		ESP::i().renderImGui();
-		ImGui::EndChild();
-
-		ImGui::Spacing();
-
-		ImGui::BeginChild(obf("Markers").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		Marker::i().renderImGui();
-		ImGui::EndChild();
-
-		ImGui::NextColumn();
-
-		ImGui::BeginChild(obf("esp2").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-
-		break;
-	}
-	case 1: {
-
-		break;
-	}
-	case 2: {
-
-		break;
-	}
-	}
-
-	ImGui::EndChild();
+    ImGui::EndChild();
 }
 
-void Menu::renderSubTab2() {
-	std::vector<std::string> arr = { obf("General"), obf("Other") };
-	ImGuiHelper::drawTabHorizontally(obf("subtab-2"), ImVec2(ImGuiHelper::getWidth(), 50), arr, selectedSubTab2);
-
-	ImGui::Spacing();
-
-	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
-	ImGui::BeginChild(obf("modules-wrapper").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), false);
-	ImGui::PopStyleColor();
-
-	switch (selectedSubTab2) {
-	case 0: {
-		ImGui::Columns(2, nullptr, false);
-		ImGui::SetColumnOffset(1, 300);
-
-		ImGui::BeginChild(obf("misc##0-0").c_str(), ImVec2(ImGuiHelper::getWidth(), 300), true);
-		HUD::i().renderImGui();
-		ImGui::EndChild();
-		ImGui::Spacing();
-
-		ImGui::BeginChild(obf("misc##0-1").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-
-		ImGui::NextColumn();
-
-		ImGui::BeginChild(obf("misc##0-2").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-		break;
-	}
-	case 1: {
-		ImGui::Columns(2, nullptr, false);
-		ImGui::SetColumnOffset(1, 300);
-
-		ImGui::BeginChild(obf("gui").c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 300), true);
-		ImGui::ColorEdit4(obf("Window Color##1").c_str(), (float*)winCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("BackGround Color##1").c_str(), (float*)childCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Frame Color##1").c_str(), (float*)frameCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Button Color##1").c_str(), (float*)bgCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Button Hovered Color##1").c_str(), (float*)btnHoverCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Button Active Color##1").c_str(), (float*)btnActiveCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Item Color##1").c_str(), (float*)itemCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-		ImGui::ColorEdit4(obf("Item Active Color##1").c_str(), (float*)itemActiveCol, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar);
-
-		setColors(); // not optimal to call all at once but this should be no problem to handle
-
-		ImGui::EndChild();
-
-		ImGui::Spacing();
-
-		ImGui::BeginChild(obf("smth").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-
-		ImGui::NextColumn();
-
-		ImGui::BeginChild(obf("whoknows").c_str(), ImVec2(ImGuiHelper::getWidth(), ImGuiHelper::getHeight()), true);
-		ImGui::EndChild();
-		break;
-	}
-	}
-
-	ImGui::EndChild();
+void Menu::renderMisc() {
+    ImGui::BeginChild("##misc-content", ImVec2(0.0f, 0.0f), true);
+    HUD::i().renderImGui();
+    ImGui::EndChild();
 }
 
 void Menu::render() {
-	HUD::i().render();
-	if (!isGUIVisible) return;
+    HUD::i().render();
+    if (!isGUIVisible)
+        return;
 
-	ImGui::SetNextWindowSize({ 800, 600 });
-	ImGui::Begin(" ", 0, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+    ThemeManager::i().applyLiveStyle();
 
-	ImGui::Columns(2);
-	ImGui::SetColumnOffset(1, 173);
+    ImGui::SetNextWindowSize(ImVec2(860.0f, 620.0f), ImGuiCond_Always);
+    ImGui::Begin(
+        "##revival-menu",
+        nullptr,
+        ImGuiWindowFlags_NoResize |
+            ImGuiWindowFlags_NoCollapse |
+            ImGuiWindowFlags_NoTitleBar |
+            ImGuiWindowFlags_NoScrollbar |
+            ImGuiWindowFlags_NoScrollWithMouse);
 
-	renderPanel();
+    const ImVec2 windowPos = ImGui::GetWindowPos();
+    const ImVec2 windowSize = ImGui::GetWindowSize();
+    BackgroundManager::i().render(
+        windowPos,
+        ImVec2(windowPos.x + windowSize.x, windowPos.y + windowSize.y));
 
-	{// Right side
-		ImGui::NextColumn();
+    if (ImGui::BeginTable("##main-layout", 2, ImGuiTableFlags_SizingStretchProp)) {
+        ImGui::TableSetupColumn("##sidebar", ImGuiTableColumnFlags_WidthFixed, 173.0f);
+        ImGui::TableSetupColumn("##content", ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableNextRow();
 
-		switch (selectedTab) {
-		case 0: {
-			renderSubTab0();
-			break;
-		}
-		case 1: {
-			renderSubTab1();
-			break;
-		}
-		case 2: {
-			renderSubTab2();
-			break;
-		}
-		case 3: {
-			Config::i().renderImGui();// for config, save current(new), load, delete, duplicate, overwrite
-			break;
-		}
-		}
-	}
-	ImGui::End();
+        ImGui::TableSetColumnIndex(0);
+        renderPanel();
+
+        ImGui::TableSetColumnIndex(1);
+        switch (state.selectedTab) {
+        case 0:
+            renderLegit();
+            break;
+        case 1:
+            renderVisuals();
+            break;
+        case 2:
+            renderMisc();
+            break;
+        case 3:
+            LuaManager::i().renderMenu();
+            break;
+        case 4:
+            ThemeManager::i().renderMenu();
+            break;
+        case 5:
+            Config::i().renderImGui();
+            break;
+        default:
+            state.selectedTab = 0;
+            break;
+        }
+
+        ImGui::EndTable();
+    }
+
+    ImGui::End();
 }

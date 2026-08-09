@@ -1,15 +1,28 @@
 #pragma once
+
 #include "imgui.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace ImGuiHelper {
-	void drawTabHorizontally(std::string childName, ImVec2 childSize, std::vector<std::string>tabNames, int& selectedSubTab); // draws togglebuttons(tabs) in a child
-	float getWidth();
-	float getHeight();
-	ImVec4 rgbaToVec4(float r, float g, float b, float a);
-	ImVec4 rgbaToVec4(ImColor& col);
-	ImVec2 getTextLength(std::string text);
-	void renderCombo(std::string title, std::vector<std::string>items, int& index, int comboWidth);
+    void drawTabHorizontally(
+        const std::string& childName,
+        const ImVec2& childSize,
+        const std::vector<std::string>& tabNames,
+        int& selectedSubTab);
+
+    float getWidth();
+    float getHeight();
+
+    ImVec4 rgbaToVec4(float r, float g, float b, float a);
+    ImVec4 rgbaToVec4(const ImColor& color);
+
+    ImVec2 getTextLength(const std::string& text);
+
+    void renderCombo(
+        const std::string& title,
+        const std::vector<std::string>& items,
+        int& index,
+        float comboWidth);
 }

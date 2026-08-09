@@ -1,148 +1,155 @@
-#include "../util/StringH.hpp"
-#include "../util/ColorH.hpp"
-#include "imgui.h"
-#define IMGUI_DEFINE_MATH_OPERATORS
-#include "imgui_internal.h"
 #include "imgui_custom.hpp"
 
+#include "../util/ColorH.hpp"
+#include "../util/StringH.hpp"
+
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include "imgui_internal.h"
+
 #include <Windows.h>
+
+#include <algorithm>
 #include <string>
 
+namespace {
+    ImGuiID g_activeHotkey = 0;
+    bool g_waitForRelease = false;
 
-
-
-bool ImGui::Checkbox_(const char* label, bool* v) {
-	if (STYLE == 0) return Checkbox2(label, v);
-}
-bool ImGui::SliderFloat_(const char* label, float* v, float v_min, float v_max, const char* format, ImGuiSliderFlags flags) {
-	if (STYLE == 0) return SliderFloat_2(label, v, v_min, v_max, format, flags);
-}
-bool ImGui::SliderInt_(const char* label, int* v, int v_min, int v_max, const char* format, ImGuiSliderFlags flags) {
-	if (STYLE == 0) return SliderInt_2(label, v, v_min, v_max, format, flags);
-	//if (STYLE == 1) return SliderInt_2(label, v, v_min, v_max, format, flags);
-}
-
-
-
-
-bool ImGui::Checkbox2(const char* label, bool* v) {
-	ImGuiWindow* window = GetCurrentWindow();
-	if (window->SkipItems) return false;
-
-	ImGuiContext& g = *GImGui;
-	const ImGuiStyle& style = g.Style;
-	const ImGuiID id = window->GetID(label);
-	const ImVec2 label_size = CalcTextSize(label, NULL, true);
-
-	const float square_sz = GetFrameHeight();
-	const ImVec2 pos = window->DC.CursorPos;
-	const ImRect total_bb(pos, pos + ImVec2(square_sz + (label_size.x > 0.0f ? style.ItemInnerSpacing.x + label_size.x : 0.0f), label_size.y + style.FramePadding.y * 2.0f));
-	ItemSize(total_bb, style.FramePadding.y);
-	if (!ItemAdd(total_bb, id))
-	{
-		IMGUI_TEST_ENGINE_ITEM_INFO(id, label, g.LastItemData.StatusFlags | ImGuiItemStatusFlags_Checkable | (*v ? ImGuiItemStatusFlags_Checked : 0));
-		return false;
-	}
-
-	bool hovered, held;
-	bool pressed = ButtonBehavior(total_bb, id, &hovered, &held);
-	if (pressed)
-	{
-		*v = !(*v);
-		MarkItemEdited(id);
-	}
-
-	const ImRect check_bb(pos, pos + ImVec2(square_sz, square_sz));
-	RenderNavHighlight(total_bb, id);
-	RenderFrame(check_bb.Min, check_bb.Max, GetColorU32((held && hovered) ? ImGuiCol_FrameBgActive : hovered ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg), true, style.FrameRounding);
-	ImU32 check_col = GetColorU32(ImGuiCol_CheckMark);
-	bool mixed_value = (g.LastItemData.InFlags & ImGuiItemFlags_MixedValue) != 0;
-	if (mixed_value)
-	{
-		// Undocumented tristate/mixed/indeterminate checkbox (#2644)
-		// This may seem awkwardly designed because the aim is to make ImGuiItemFlags_MixedValue supported by all widgets (not just checkbox)
-		ImVec2 pad(ImMax(1.0f, IM_FLOOR(square_sz / 3.6f)), ImMax(1.0f, IM_FLOOR(square_sz / 3.6f)));
-		window->DrawList->AddRectFilled(check_bb.Min + pad, check_bb.Max - pad, check_col, style.FrameRounding);
-	}
-	else if (*v)
-	{
-		const float pad = ImMax(1.0f, IM_FLOOR(square_sz / 6.0f));
-		RenderCheckMark(window->DrawList, check_bb.Min + ImVec2(pad, pad), check_col, square_sz - pad * 2.0f);
-	}
-
-	ImVec2 label_pos = ImVec2(check_bb.Max.x + style.ItemInnerSpacing.x, check_bb.Min.y + style.FramePadding.y);
-	if (g.LogEnabled)
-		LogRenderedText(&label_pos, mixed_value ? "[~]" : *v ? "[x]" : "[ ]");
-	if (label_size.x > 0.0f)
-		RenderText(label_pos, label);
-
-	IMGUI_TEST_ENGINE_ITEM_INFO(id, label, g.LastItemData.StatusFlags | ImGuiItemStatusFlags_Checkable | (*v ? ImGuiItemStatusFlags_Checked : 0));
-	return pressed;
+    bool anyBindableKeyDown() {
+        for (int key = VK_LBUTTON; key <= VK_PACKET; ++key) {
+            if (GetAsyncKeyState(key) & 0x8000)
+                return true;
+        }
+        return false;
+    }
 }
 
-bool ImGui::SliderFloat_3(const char* label, float* v, float v_min, float v_max, const char* format, ImGuiSliderFlags flags) {
-	return SliderScalar_2(label, ImGuiDataType_Float, v, &v_min, &v_max, format, flags);
+bool ImGui::Checkbox_(const char* label, bool* value) {
+    // Keep the old public name, but use the supported Dear ImGui widget path.
+    return ImGui::Checkbox(label, value);
 }
-bool ImGui::SliderFloat_2(const char* label, float* v, float v_min, float v_max, const char* format, ImGuiSliderFlags flags) {
-	return SliderScalar(label, ImGuiDataType_Float, v, &v_min, &v_max, format, flags);
+
+bool ImGui::SliderFloat_(
+    const char* label,
+    float* value,
+    float minValue,
+    float maxValue,
+    const char* format,
+    ImGuiSliderFlags flags) {
+    return ImGui::SliderFloat(label, value, minValue, maxValue, format, flags);
 }
-bool ImGui::SliderInt_2(const char* label, int* v, int v_min, int v_max, const char* format, ImGuiSliderFlags flags) {
-	return SliderScalar(label, ImGuiDataType_S32, v, &v_min, &v_max, format, flags);
-}
-bool ImGui::SliderInt_3(const char* label, int* v, int v_min, int v_max, const char* format, ImGuiSliderFlags flags) {
-	return SliderScalar_2(label, ImGuiDataType_S32, v, &v_min, &v_max, format, flags);
+
+bool ImGui::SliderInt_(
+    const char* label,
+    int* value,
+    int minValue,
+    int maxValue,
+    const char* format,
+    ImGuiSliderFlags flags) {
+    return ImGui::SliderInt(label, value, minValue, maxValue, format, flags);
 }
 
 bool ImGuiTextFilter2::Draw2(const char* label, float width) {
-	if (width != 0.0f)
-		ImGui::SetNextItemWidth(width);
+    if (width != 0.0f)
+        ImGui::SetNextItemWidth(width);
 
-	std::string id = std::string("##Input_") += label;
-	bool value_changed = ImGui::InputTextWithHint(id.c_str(), label, InputBuf, IM_ARRAYSIZE(InputBuf));
-	if (value_changed)
-		Build();
-	return value_changed;
+    const std::string id = std::string("##Input_") + label;
+    const bool changed = ImGui::InputTextWithHint(id.c_str(), label, InputBuf, IM_ARRAYSIZE(InputBuf));
+    if (changed)
+        Build();
+    return changed;
 }
 
 bool ImGui::Hotkey(const char* label, int& key, float samelineOffset, const ImVec2& size) {
-	ImGuiWindow* window = GetCurrentWindow();
-	if (window->SkipItems) return false;
+    ImGuiWindow* window = GetCurrentWindow();
+    if (window->SkipItems)
+        return false;
 
-	ImGuiContext& g = *GImGui;
-	ImGuiIO& io = g.IO;
-	const ImGuiStyle& style = g.Style;
-	const ImGuiID id = window->GetID(label);
-	const ImVec2 label_size = CalcTextSize(label, NULL, true);
+    const ImGuiID id = window->GetID(label);
 
-	TextUnformatted(label);
-	SameLine(samelineOffset);
+    TextUnformatted(label);
+    SameLine(samelineOffset);
 
-	Button(key == 0 ? "..." : StringH::vkToString(key).c_str(), size);
-	if (IsItemHovered()) {
-		for (auto i = VK_MBUTTON; i <= VK_PACKET; i++) {
-			//if (io.KeysDown[i]) {
-			if (i == VK_ESCAPE) continue;
-			if (GetAsyncKeyState(i) & 0x8000) { // 0x8000 Flag checks if Key is currently being hold
-				key = i;
-			}
-		}
-	}
+    std::string buttonText;
+    if (g_activeHotkey == id)
+        buttonText = "Press a key...";
+    else if (key == 0)
+        buttonText = "None";
+    else
+        buttonText = StringH::vkToString(key);
 
-	return true;
+    bool changed = false;
+    if (Button(buttonText.c_str(), size)) {
+        g_activeHotkey = id;
+        g_waitForRelease = true;
+    }
+
+    if (g_activeHotkey != id)
+        return changed;
+
+    if (g_waitForRelease) {
+        if (!anyBindableKeyDown())
+            g_waitForRelease = false;
+        return changed;
+    }
+
+    if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+        g_activeHotkey = 0;
+        return false;
+    }
+
+    if ((GetAsyncKeyState(VK_BACK) & 0x8000) || (GetAsyncKeyState(VK_DELETE) & 0x8000)) {
+        key = 0;
+        g_activeHotkey = 0;
+        return true;
+    }
+
+    for (int candidate = VK_LBUTTON; candidate <= VK_PACKET; ++candidate) {
+        if (candidate == VK_ESCAPE || candidate == VK_BACK || candidate == VK_DELETE)
+            continue;
+
+        if (GetAsyncKeyState(candidate) & 0x8000) {
+            key = candidate;
+            g_activeHotkey = 0;
+            changed = true;
+            break;
+        }
+    }
+
+    return changed;
 }
 
-void ImGui::chromaText(std::string text, float sat, float value, float alpha, float offset, float speed, float range) {
-	for (int i = 0; i < text.length(); i++) {
-		char c = text.c_str()[i];
-		std::string s(1, text.at(i));
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(-0.5, 4)); // not the best way, calculating string width will be slightly inaccurate
-		float r, g, b;
-		ColorH::HSVtoRGB(ColorH::getTimeHue(i * range, speed, offset), sat, value, r, g, b);
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(r, g, b, alpha));
-		Text(s.c_str());
-		ImGui::PopStyleColor();
+void ImGui::chromaText(
+    const std::string& text,
+    float saturation,
+    float value,
+    float alpha,
+    float offset,
+    float speed,
+    float range) {
+    for (std::size_t i = 0; i < text.size(); ++i) {
+        const std::string character(1, text[i]);
 
-		if (i != text.length() - 1) ImGui::SameLine();
-		ImGui::PopStyleVar();
-	}
+        PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(-0.5f, 4.0f));
+
+        float r = 0.0f;
+        float g = 0.0f;
+        float b = 0.0f;
+        ColorH::HSVtoRGB(
+            ColorH::getTimeHue(static_cast<float>(i) * range, speed, offset),
+            saturation,
+            value,
+            r,
+            g,
+            b);
+
+        PushStyleColor(ImGuiCol_Text, ImVec4(r, g, b, alpha));
+        TextUnformatted(character.c_str());
+        PopStyleColor();
+
+        if (i + 1 < text.size())
+            SameLine();
+
+        PopStyleVar();
+    }
 }
