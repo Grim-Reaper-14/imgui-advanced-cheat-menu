@@ -125,3 +125,4 @@ jobs:
 
 # Revival V2 scripting dependency validation
 # Final UI + Lua validation
+# Validate post-Sol2 macro isolation fix
